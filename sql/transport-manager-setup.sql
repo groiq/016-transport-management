@@ -44,3 +44,18 @@ CREATE TABLE load_legs (
     foreign key (location_id) references locations (location_id)
 );
 
+insert into locations (name,latitude,longitude) values ('Bregenz',47.505,9.749167);
+insert into locations (name,latitude,longitude) values ('Innsbruck',47.267222,11.392778);
+insert into locations (name,latitude,longitude) values ('Salzburg',47.8,13.033333);
+insert into locations (name,latitude,longitude) values ('Linz',48.303056,14.290556);
+insert into locations (name,latitude,longitude) values ('Klagenfurt',46.617778,14.305556);
+insert into locations (name,latitude,longitude) values ('St. Poelten',48.204722,15.626667);
+insert into locations (name,latitude,longitude) values ('Graz',47.066667,15.433333);
+insert into locations (name,latitude,longitude) values ('Wien',48.208333,16.373056);
+insert into locations (name,latitude,longitude) values ('Eisenstadt',47.845556,16.518889);
+
+insert into trucks (fixed_costs_per_hour,cost_per_km,avg_speed) values (100.0,50.0,75.0);
+
+
+
+-- select * from loads;
