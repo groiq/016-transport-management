@@ -9,18 +9,28 @@ Die Daten werden auf einem MySQL-Datenbankcluster in der Azure Cloud gespeichert
 
 ## Technologien
 
-Datenbank: MySQL auf Azure
-Webinterface: PHP
-Eingabe: Python-Skript auf Raspberry, das auf Ereignisse reagiert JSON-Daten an eine API sendet
+- Datenbank: MySQL auf Azure
+- Webinterface: PHP, Bootstrap
+- Eingabe: Python-Skript auf Raspberry, das auf Ereignisse reagiert JSON-Daten an eine API sendet
 
 ## Features
+
+### Stammdaten
 
 In der Datenbank sind Orte mit ihren Geodaten als Stammdaten hinterlegt.
 
 LKWs werden mit Durchschnittsgeschwindigkeit, Fixkosten und Fahrtkosten ebenfalls als Stammdaten gespeichert.
 
+Aufwandsschätzung: 3 Tage
+
+### Verwalten von Routen
+
 Über das Webinterface können Routen zwischen zwei Orten mit Zwischenstationen und einem gewünschten Abfahrtszeitpunkt angelegt werden. Das System kalkuliert automatisch die Distanzen sowie die voraussichtlichen Reisezeiten und Kosten.
+
+Aufwandsschätzung: 2 Tage
+
+### Tracking der Fahrzeuge 
 
 Das System empfängt Informationen über die tatsächlichen Bewegungen der LKWs und berechnet die Differenzen zwischen den erwarteten und den tatsächlichen Reisezeiten und Kosten.
 
-
+Aufwandsschätzung: 3 Tage 
