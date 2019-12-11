@@ -1,6 +1,4 @@
 
---  https://azure.microsoft.com/de-de/features/azure-portal/
-
 /* Database for transport management project */
 
 drop database if exists transport_management;
@@ -9,16 +7,17 @@ use transport_management;
 
 CREATE TABLE locations (
     location_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(32),
+    name NVARCHAR(32),
     latitude DECIMAL(8 , 6 ),
     longitude DECIMAL(9 , 6 )
 );
 
 CREATE TABLE trucks (
     truck_id INT PRIMARY KEY AUTO_INCREMENT,
-    fixed_cost_per_hour DECIMAL,
-    cost_per_km DECIMAL,
-    avg_speed DECIMAL
+    license_plate NVARCHAR(8),
+    fixed_cost_per_hour DECIMAL(8 , 2 ),
+    cost_per_km DECIMAL(8 , 2 ),
+    avg_speed DECIMAL(8 , 2 )
 );
 
 CREATE TABLE loads (
@@ -28,7 +27,7 @@ CREATE TABLE loads (
     target_location_id INT,
     start_time_estimate TIMESTAMP null DEFAULT null,
     start_time_actual TIMESTAMP null DEFAULT null,
-    -- target_time_estimate timestamp default current_timestamp, -- calculated value!
+    target_time_estimate timestamp default current_timestamp, -- calculated value!
     target_time_actual TIMESTAMP null DEFAULT null,
     FOREIGN KEY (truck_id)
         REFERENCES trucks (truck_id),
@@ -66,8 +65,8 @@ insert into loads (truck_id, start_location_id,target_location_id,start_time_est
 insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) values (1,4,1,current_timestamp);
 insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) values (1,6,2,current_timestamp);
 
-select * from locations;
-select * from loads;
+-- select * from locations;
+-- select * from loads;
 
 SELECT 
     load_id,
@@ -75,9 +74,9 @@ SELECT
     loads.start_location_id,
     start_locations.name AS start_loc_name,
     loads.target_location_id,
-    load_legs.number_in_sequence as leg_sequence_number,
     target_locations.name AS target_loc_name,
-    leg_locations.location_id as leg_loc_id, leg_locations.name as leg_loc_name
+    leg_locations.location_id as leg_loc_id, leg_locations.name as leg_loc_name,
+    load_legs.number_in_sequence as leg_sequence_number
 FROM
     trucks
         JOIN
