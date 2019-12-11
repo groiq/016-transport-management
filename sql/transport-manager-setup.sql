@@ -1,4 +1,6 @@
 
+--  https://azure.microsoft.com/de-de/features/azure-portal/
+
 /* Database for transport management project */
 
 drop database if exists transport_management;
@@ -66,3 +68,26 @@ insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) val
 
 select * from locations;
 select * from loads;
+
+SELECT 
+    load_id,
+    truck_id,
+    loads.start_location_id,
+    start_locations.name AS start_loc_name,
+    loads.target_location_id,
+    load_legs.number_in_sequence as leg_sequence_number,
+    target_locations.name AS target_loc_name,
+    leg_locations.location_id as leg_loc_id, leg_locations.name as leg_loc_name
+FROM
+    trucks
+        JOIN
+    loads USING (truck_id)
+        JOIN
+    locations start_locations ON start_locations.location_id = loads.start_location_id
+        JOIN
+    locations target_locations ON target_locations.location_id = loads.target_location_id
+        JOIN
+    load_legs USING (load_id)
+        JOIN
+    locations leg_locations ON leg_locations.location_id = load_legs.location_id
+;
