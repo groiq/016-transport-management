@@ -18,6 +18,10 @@ user account control issue:
 
 https://www.wikitechy.com/fix-error/how-to-fix-uac-please-avoid-to-install-xampp
 
+very clean guide to setting php executable in vscode
+
+https://webstoked.com/fix-cannot-validate-php-vs-code/
+
 # var
 
 ## timestamp to default null
