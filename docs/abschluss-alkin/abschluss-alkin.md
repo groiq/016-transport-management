@@ -1,6 +1,8 @@
 
 # Abschlussprojekt - Transportmanagementsystem in der Cloud
 
+Hannes Alkin
+
 ## Zusammenfassung
 
 Das Projekt soll ein vereinfachtes Transportmanagementsystem in der Cloud modellieren. Die Software soll die Transportkosten für LKW-Fahrten überwachen.
