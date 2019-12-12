@@ -32,7 +32,7 @@ FROM
     locations target_locations ON target_locations.location_id = loads.target_location_id
 ;
 
-
+-- loads with load legs
 SELECT 
     load_id,
     truck_id,
@@ -55,3 +55,13 @@ FROM
         LEFT JOIN
     locations leg_locations ON leg_locations.location_id = load_legs.location_id
 ;
+
+-- all locations, routes and tracks
+SELECT 
+    *
+FROM
+    locations
+        LEFT JOIN
+    loads ON locations.location_id = loads.start_location_id
+        RIGHT JOIN
+    trucks USING (truck_id);
