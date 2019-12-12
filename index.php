@@ -5,11 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-	<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
-
-	<!-- Inline CSS based on choices in "Settings" tab -->
-	<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
     <title>Transport Management System</title>
 </head>
@@ -23,8 +19,11 @@
 
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
-        $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
-        $statement->execute(array($_POST['startLocation'],$_POST['targetLocation'],$_POST['truck']));
+        $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id,start_time_estimate) VALUES (?,?,?,?);");
+        $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
+        $sqlTimestamp = date('y-m-d H:i:s',$timestamp);
+        $statement->execute(array($_POST['startLocation'], $_POST['targetLocation'], $_POST['truck'], $sqlTimestamp));
+
     }
 
     // read data
@@ -35,47 +34,62 @@
     $truckQuerySql = "select truck_id, license_plate from trucks;";
     $truckQuery = $pdo->query($truckQuerySql);
     $trucks = $truckQuery->fetchAll(\PDO::FETCH_ASSOC);
- 
+
     ?>
 
-	<?php
-	
-			// function for dropdown lists
-    function offerOptions($optionList,$optionValue,$optionName) {
+    <?php
+
+    // function for dropdown lists
+    function offerOptions($optionList, $optionValue, $optionName)
+    {
         foreach ($optionList as $option) {
-            echo("<option value='".$option[$optionValue]."'>".$option[$optionName]."</option>\n");
+            echo ("<option value='" . $option[$optionValue] . "'>" . $option[$optionName] . "</option>\n");
         }
     }
 
-	?>
+    ?>
 
-  
+
     <h1>Transport Management System</h1>
 
-    
+    <h2>Neue Fuhre</h2>
+
     <form action="./index.php" method="post">
         <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
-        <div class="form-group">
-            <label for="startLocation">Start location</label>
-            <select class="form-control" id="startLocation" name="startLocation">
-                <?php
-                    offerOptions($locations,"location_id","name");
-                ?>
-            </select>
-            <label for="targetLocation">Target location</label>
-            <select class="form-control" id="targetLocation" name="targetLocation">
-                <?php
-                    offerOptions($locations,"location_id","name");
-                    ?>
-            </select>
-			<label class="control-label" for="date">Date</label>
-			<input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
 
-            <label for="truck">Truck</label>
+        <div class="form-group">
+
+            <!-- <label class="control-label" for="startTime">Abfahrt</label>
+            <input class="form-control" id="startTime" name="startTime" type="datetime-local"> -->
+
+            <label class="control-label" for="date">Datum</label>
+            <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
+
+            <label for="time">Uhrzeit</label>
+            <input class="form-control" type="time" id="time" name="time">
+
+            <label for="truck">Fahrzeug</label>
             <select class="form-control" id="truck" name="truck">
                 <?php
-                    offerOptions($trucks,"truck_id","license_plate");
-                    ?>
+                offerOptions($trucks, "truck_id", "license_plate");
+                ?>
+            </select>
+
+        </div>
+        <div class="form-group">
+
+
+            <label for="startLocation">Von</label>
+            <select class="form-control" id="startLocation" name="startLocation">
+                <?php
+                offerOptions($locations, "location_id", "name");
+                ?>
+            </select>
+            <label for="targetLocation">Nach</label>
+            <select class="form-control" id="targetLocation" name="targetLocation">
+                <?php
+                offerOptions($locations, "location_id", "name");
+                ?>
             </select>
         </div>
         <div class="form-group">
@@ -84,152 +98,67 @@
     </form>
 
 
-<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
-<div class="bootstrap-iso">
- <div class="container-fluid">
-  <div class="row">
-   <div class="col-md-6 col-sm-6 col-xs-12">
-    <div class="formden_header">
-     <h2>
-      Create new Load
-     </h2>
-     <p>
-     </p>
-    </div>
-    <form class="form-horizontal" method="post">
-     <div class="form-group ">
-      <label class="control-label col-sm-2 requiredField" for="startLocation">
-       Start location
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <div class="col-sm-10">
-       <select class="select form-control" id="startLocation" name="startLocation">
-        <option value="New York">
-         New York
-        </option>
-        <option value="Moscow">
-         Moscow
-        </option>
-       </select>
-      </div>
-     </div>
-     <div class="form-group ">
-      <label class="control-label col-sm-2 requiredField" for="targetLocation">
-       Target location
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <div class="col-sm-10">
-       <select class="select form-control" id="targetLocation" name="targetLocation">
-        <option value="New York">
-         New York
-        </option>
-        <option value="Third Choice">
-         Third Choice
-        </option>
-       </select>
-      </div>
-     </div>
-     <div class="form-group ">
-      <label class="control-label col-sm-2 requiredField" for="truck">
-       Truck
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <div class="col-sm-10">
-       <select class="select form-control" id="truck" name="truck">
-        <option value="LL-something">
-         LL-something
-        </option>
-        <option value="W-somethingElse">
-         W-somethingElse
-        </option>
-       </select>
-      </div>
-     </div>
-     <div class="form-group ">
-      <label class="control-label col-sm-2 requiredField" for="date">
-       Date
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <div class="col-sm-10">
-       <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
-      </div>
-     </div>
-     <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-       <button class="btn btn-primary " name="submit" type="submit">
-        Fuhre erstellen
-       </button>
-      </div>
-     </div>
-    </form>
-   </div>
-  </div>
- </div>
-</div>
-
-
 
 
     <!-- -------------------------------------------------- -->
-<h1>Debug data</h1>
+    <h1>Debug data</h1>
 
-<ul>
+    <ul>
         <?php
         foreach ($locations as $location) {
             // print_r($locationTuple);
-            echo ("<li>".$location["name"]."</li>");
+            echo ("<li>" . $location["name"] . "</li>");
         }
         ?>
-        
+
     </ul>
 
- <pre>
+    <pre>
         <?php
 
         if (!empty($_POST["dbInsert"])) {
             print_r($_POST);
+            echo ("\n\n");
+            var_dump($_POST);
+            echo ("\n\n");
+            echo ($_POST["date"] . " " . $_POST["time"]);
+            echo ("\n\n");
+            $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
+            // echo($timestamp);
+            $sqlTimestamp = date('y-m-d H:i:s',$timestamp);
+            echo($sqlTimestamp);
+            // $t = strtotime('20130409163705');
+            // echo date('d/m/y H:i:s', $t);
+            // Format: YYYY-MM-DD hh:mm:ss.
         } else {
-            echo("no data");
+            echo ("no data");
         }
 
-        echo("\n\n");
+        echo ("\n\n");
 
-    print_r($locations);
-	
-	var_dump($locations);
+        print_r($locations);
 
-    ?>
+        var_dump($locations);
+
+        ?>
     </pre>
     <!-- -------------------------------------------------- -->
 
-<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
-<!-- Include jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> -->
 
-<script>
-    $(document).ready(function(){
-        var date_input=$('input[name="date"]'); //our date input has the name "date"
-        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-        date_input.datepicker({
-            format: 'mm/dd/yyyy',
-            container: container,
-            todayHighlight: true,
-            autoclose: true,
-        })
-    })
-</script>
+    <!-- <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script> -->
 
 
 </body>
