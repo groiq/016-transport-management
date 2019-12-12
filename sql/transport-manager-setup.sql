@@ -24,17 +24,17 @@ CREATE TABLE loads (
     load_id INT PRIMARY KEY AUTO_INCREMENT,
     truck_id INT,
     start_location_id INT,
-    target_location_id INT,
+    -- target_location_id INT,
     start_time_estimate TIMESTAMP null DEFAULT null,
     start_time_actual TIMESTAMP null DEFAULT null,
-    target_time_estimate timestamp default current_timestamp, -- calculated value!
-    target_time_actual TIMESTAMP null DEFAULT null,
+    -- target_time_estimate timestamp default current_timestamp, -- calculated value!
+    -- target_time_actual TIMESTAMP null DEFAULT null,
     FOREIGN KEY (truck_id)
         REFERENCES trucks (truck_id),
     FOREIGN KEY (start_location_id)
-        REFERENCES locations (location_id),
-    FOREIGN KEY (target_location_id)
         REFERENCES locations (location_id)
+    -- FOREIGN KEY (target_location_id)
+        -- REFERENCES locations (location_id)
 );
 
 CREATE TABLE load_legs (
@@ -60,10 +60,11 @@ insert into locations (name,latitude,longitude) values ('Eisenstadt',47.845556,1
 
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',100.0,50.0,75.0);
 
-insert into loads (truck_id, start_location_id,target_location_id,start_time_estimate) values (1,3,8,current_timestamp);
+insert into loads (truck_id, start_location_id,start_time_estimate) values (1,3,current_timestamp);
 
 insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) values (1,4,1,current_timestamp);
 insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) values (1,6,2,current_timestamp);
+insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) values (1,8,3,current_timestamp);
 
 -- select * from locations;
 -- select * from loads;
@@ -73,8 +74,8 @@ SELECT
     truck_id,
     loads.start_location_id,
     start_locations.name AS start_loc_name,
-    loads.target_location_id,
-    target_locations.name AS target_loc_name,
+    -- loads.target_location_id,
+    -- target_locations.name AS target_loc_name,
     leg_locations.location_id as leg_loc_id, leg_locations.name as leg_loc_name,
     load_legs.number_in_sequence as leg_sequence_number
 FROM
@@ -83,8 +84,8 @@ FROM
     loads USING (truck_id)
         JOIN
     locations start_locations ON start_locations.location_id = loads.start_location_id
-        JOIN
-    locations target_locations ON target_locations.location_id = loads.target_location_id
+        -- JOIN
+    -- locations target_locations ON target_locations.location_id = loads.target_location_id
         LEFT JOIN
     load_legs USING (load_id)
         JOIN

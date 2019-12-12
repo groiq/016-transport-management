@@ -29,7 +29,7 @@ FROM
     loads USING (truck_id)
         JOIN
     locations start_locations ON start_locations.location_id = loads.start_location_id
-        JOIN
+        LEFT JOIN
     locations target_locations ON target_locations.location_id = loads.target_location_id
 ORDER BY load_id
 ;
@@ -57,6 +57,15 @@ FROM
         LEFT JOIN
     locations leg_locations ON leg_locations.location_id = load_legs.location_id
 ;
+
+describe trucks;
+insert into trucks (license_plate) values ('w-xyz23');
+select * from trucks;
+select last_insert_id();
+select * from loads;
+insert into loads (truck_id) values (last_insert_id());
+
+select * from loads;
 
 -- all locations, routes and tracks
 SELECT 
