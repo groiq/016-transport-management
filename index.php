@@ -36,15 +36,18 @@
     $truckQuery = $pdo->query($truckQuerySql);
     $trucks = $truckQuery->fetchAll(\PDO::FETCH_ASSOC);
  
+    ?>
+
+	<?php
+	
+			// function for dropdown lists
     function offerOptions($optionList,$optionValue,$optionName) {
         foreach ($optionList as $option) {
             echo("<option value='".$option[$optionValue]."'>".$option[$optionName]."</option>\n");
         }
     }
 
-    ?>
-
-
+	?>
 
   
     <h1>Transport Management System</h1>
@@ -200,6 +203,8 @@
         echo("\n\n");
 
     print_r($locations);
+	
+	var_dump($locations);
 
     ?>
     </pre>
