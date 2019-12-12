@@ -34,6 +34,8 @@ https://github.com/uxsolutions/bootstrap-datepicker
 
 # Editable List
 
+https://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
+
 https://memorynotfound.com/dynamically-addremove-items-list-javascript/
 
 <ul id="dynamic-list"></ul>
