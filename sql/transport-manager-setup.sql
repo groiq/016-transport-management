@@ -60,6 +60,9 @@ insert into locations (name,latitude,longitude) values ('Eisenstadt',47.845556,1
 
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',100.0,50.0,75.0);
 
+select * from locations;
+
+/*
 insert into loads (truck_id, start_location_id,start_time_estimate) values (1,3,current_timestamp);
 
 insert into load_legs (load_id,location_id,number_in_sequence,time_estimate) values (1,4,1,current_timestamp);
@@ -91,3 +94,4 @@ FROM
         JOIN
     locations leg_locations ON leg_locations.location_id = load_legs.location_id
 ;
+*/
