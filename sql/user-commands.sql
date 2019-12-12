@@ -15,6 +15,7 @@ select * from locations;
 select * from loads;
 select * from trucks;
 
+-- loads with locations 
 SELECT 
     load_id,
     truck_id,
@@ -30,6 +31,7 @@ FROM
     locations start_locations ON start_locations.location_id = loads.start_location_id
         JOIN
     locations target_locations ON target_locations.location_id = loads.target_location_id
+ORDER BY load_id
 ;
 
 -- loads with load legs
