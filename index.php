@@ -61,19 +61,24 @@
         }
 
         // function for inserting legs
-        function insertLeg($pdo,$sequence_number,$location_id) {
+        function insertLeg($pdo,$loadId,$sequence_number,$location_id) {
             echo("inserting into database: " . " - " . $sequence_number . " - " . $location_id) . "\n";
+			$statement = $pdo->prepare("INSERT INTO load_legs (load_id,location_id,number_in_sequence) VALUES (?,?,?);");
+			// insert into load_legs (load_id,location_id,number_in_sequence) values (2,1,1);
+			$statement->execute(array($loadId,$location_id,$sequence_number));
+
         }
 
         // insert legs into database
         for($i = 0; $i < count($_POST['legs']); $i++) {
             echo($i+1);
-            insertLeg($pdo,($i+1),$_POST['legs'][$i]);
+            insertLeg($pdo,$lastId,($i+1),$_POST['legs'][$i]);
             
         }
 
         // insert target location as final leg
-
+		// echo("values for target: sequence_number " . count($_POST['legs']) . ", location_id " . $_POST['targetLocation']);
+		insertLeg($pdo, $lastId, count($_POST['legs'])+1,$_POST['targetLocation']);
     }
 
     // read data
