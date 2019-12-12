@@ -51,18 +51,18 @@
         // test output on that
         // print_r($queryResult);
         // echo ("\n");
-        print_r($lastId);
+        // print_r($lastId);
 
         // output values for legs
-        print_r($_POST['legs']);
-        for($i = 0; $i < count($_POST['legs']); $i++) {
-            echo("seq: " . ($i + 1) . " locId: ");
-            echo($_POST['legs'][$i]."\n");
-        }
+        // print_r($_POST['legs']);
+        // for($i = 0; $i < count($_POST['legs']); $i++) {
+            // echo("seq: " . ($i + 1) . " locId: ");
+            // echo($_POST['legs'][$i]."\n");
+        // }
 
         // function for inserting legs
         function insertLeg($pdo,$loadId,$sequence_number,$location_id) {
-            echo("inserting into database: " . " - " . $sequence_number . " - " . $location_id) . "\n";
+            // echo("inserting into database: " . " - " . $sequence_number . " - " . $location_id) . "\n";
 			$statement = $pdo->prepare("INSERT INTO load_legs (load_id,location_id,number_in_sequence) VALUES (?,?,?);");
 			// insert into load_legs (load_id,location_id,number_in_sequence) values (2,1,1);
 			$statement->execute(array($loadId,$location_id,$sequence_number));
@@ -71,7 +71,7 @@
 
         // insert legs into database
         for($i = 0; $i < count($_POST['legs']); $i++) {
-            echo($i+1);
+            // echo($i+1);
             insertLeg($pdo,$lastId,($i+1),$_POST['legs'][$i]);
             
         }
