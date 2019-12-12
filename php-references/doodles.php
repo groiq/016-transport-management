@@ -40,6 +40,7 @@ $dataTypes = $dataQuery->fetchAll(\PDO::FETCH_ASSOC);
 ?>
 
 <!-- Date and Time picker + form builder -->
+<!-- https://formden.com/blog/date-picker -->
 <!-- https://eonasdan.github.io/bootstrap-datetimepicker/ -->
 
 <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
@@ -160,3 +161,59 @@ $dataTypes = $dataQuery->fetchAll(\PDO::FETCH_ASSOC);
         })
     })
 </script>
+
+<!-- FORM BUILDER FOR BOOTSTRAP 4 -->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Datum</label> 
+    <div class="col-8">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="fa fa-address-card"></i>
+          </div>
+        </div> 
+        <input id="text" name="text" type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Fahrzeug</label> 
+    <div class="col-8">
+      <select id="select" name="select" class="custom-select">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="select1" class="col-4 col-form-label">Nach</label> 
+    <div class="col-8">
+      <select id="select1" name="select1" class="custom-select">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="select2" class="col-4 col-form-label">Von</label> 
+    <div class="col-8">
+      <select id="select2" name="select2" class="custom-select">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
