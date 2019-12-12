@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
+    
+
+
     <title>Transport Management System</title>
 </head>
 
@@ -21,9 +24,8 @@
     if (!empty($_POST["dbInsert"])) {
         $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id,start_time_estimate) VALUES (?,?,?,?);");
         $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
-        $sqlTimestamp = date('y-m-d H:i:s',$timestamp);
+        $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
         $statement->execute(array($_POST['startLocation'], $_POST['targetLocation'], $_POST['truck'], $sqlTimestamp));
-
     }
 
     // read data
@@ -92,11 +94,15 @@
                 ?>
             </select>
         </div>
+
+        <div id="dynamicInput"></div>
+        <input type="button" value="Add" onclick="addInput('dynamicInput');" />
+        <!-- <input type="button" value="Save" /> -->
+
         <div class="form-group">
             <input type="submit" value="Fuhre erstellen" />
         </div>
     </form>
-
 
 
 
@@ -125,8 +131,8 @@
             echo ("\n\n");
             $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
             // echo($timestamp);
-            $sqlTimestamp = date('y-m-d H:i:s',$timestamp);
-            echo($sqlTimestamp);
+            $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
+            echo ($sqlTimestamp);
             // $t = strtotime('20130409163705');
             // echo date('d/m/y H:i:s', $t);
             // Format: YYYY-MM-DD hh:mm:ss.
@@ -159,6 +165,32 @@
                 $('#datetimepicker1').datetimepicker();
             });
         </script> -->
+
+        <!-- var locations = <?php echo json_encode($locations); ?>; -->
+            
+    <script type="text/javascript">
+    
+
+    var choices = ["one", "two"];
+    var elemCounter = 0;
+
+    function addInput(divName) {
+        var locations = <?php echo json_encode($locations); ?>;
+        // alert(locations);
+        elemCounter += 1;
+        var newDiv = document.createElement('div');
+        var selectHTML = "";
+        selectHTML = "<select class='form-control' id='leg_" + elemCounter + "' name='leg_" + elemCounter + "'>";
+        // <select class="form-control" id="startLocation" name="startLocation">
+        for (i = 0; i < locations.length; i = i + 1) {
+            selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>";
+        }
+        selectHTML += "</select>";
+        newDiv.innerHTML = selectHTML;
+        document.getElementById(divName).appendChild(newDiv);
+    }
+
+</script>
 
 
 </body>
