@@ -76,3 +76,23 @@ FROM
     loads ON locations.location_id = loads.start_location_id
         RIGHT JOIN
     trucks USING (truck_id);
+    
+-- locations, loads and load_legs
+SELECT 
+    load_id,
+    start_location_id,
+    start_loc.name,
+    load_leg_id,
+    leg_location.location_id,
+    leg_location.name,
+    number_in_sequence
+FROM
+    loads
+        JOIN
+    load_legs USING (load_id)
+        JOIN
+    locations start_loc ON loads.start_location_id = start_loc.location_id
+        JOIN
+    locations leg_location ON load_legs.location_id = leg_location.location_id
+ORDER BY number_in_sequence;
+
