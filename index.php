@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
-    
+
 
 
     <title>Transport Management System</title>
 </head>
 
 <body>
+
+    <pre>
 
     <?php
 
@@ -22,10 +24,44 @@
 
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
-        $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id,start_time_estimate) VALUES (?,?,?,?);");
+
+        // insert a row into loads
+        $statement = $pdo->prepare("INSERT INTO loads (start_location_id,truck_id,start_time_estimate) VALUES (?,?,?);");
         $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
         $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
-        $statement->execute(array($_POST['startLocation'], $_POST['targetLocation'], $_POST['truck'], $sqlTimestamp));
+        $statement->execute(array($_POST['startLocation'], $_POST['truck'], $sqlTimestamp));
+
+        // fetch id of new row
+        $query = $pdo->query("SELECT LAST_INSERT_ID();");
+        $queryResult = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $lastId = $queryResult[0]['LAST_INSERT_ID()'];
+        
+        // test output on that
+        // print_r($queryResult);
+        // echo ("\n");
+        print_r($lastId);
+
+        // output values for legs
+        print_r($_POST['legs']);
+        for($i = 0; $i < count($_POST['legs']); $i++) {
+            echo("seq: " . ($i + 1) . " locId: ");
+            echo($_POST['legs'][$i]."\n");
+        }
+
+        // function for inserting legs
+        function insertLeg($pdo,$sequence_number,$location_id) {
+            echo("inserting into database: " . " - " . $sequence_number . " - " . $location_id) . "\n";
+        }
+
+        // insert legs into database
+        for($i = 0; $i < count($_POST['legs']); $i++) {
+            echo($i+1);
+            insertLeg($pdo,($i+1),$_POST['legs'][$i]);
+            
+        }
+
+        // insert target location as final leg
+
     }
 
     // read data
@@ -38,6 +74,8 @@
     $trucks = $truckQuery->fetchAll(\PDO::FETCH_ASSOC);
 
     ?>
+
+</pre>
 
     <?php
 
@@ -166,31 +204,29 @@
             });
         </script> -->
 
-        <!-- var locations = <?php echo json_encode($locations); ?>; -->
-            
+    <!-- var locations = <?php echo json_encode($locations); ?>; -->
+
     <script type="text/javascript">
-    
+        var choices = ["one", "two"];
+        var elemCounter = 0;
 
-    var choices = ["one", "two"];
-    var elemCounter = 0;
-
-    function addInput(divName) {
-        var locations = <?php echo json_encode($locations); ?>;
-        // alert(locations);
-        elemCounter += 1;
-        var newDiv = document.createElement('div');
-        var selectHTML = "";
-        selectHTML = "<select class='form-control' id='leg_" + elemCounter + "' name='leg_" + elemCounter + "'>";
-        // <select class="form-control" id="startLocation" name="startLocation">
-        for (i = 0; i < locations.length; i = i + 1) {
-            selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>";
+        function addInput(divName) {
+            var locations = <?php echo json_encode($locations); ?>;
+            // alert(locations);
+            elemCounter += 1;
+            var newDiv = document.createElement('div');
+            var selectHTML = "";
+            selectHTML = "<select class='form-control' id='legs[]' name='legs[]'>";
+            // selectHTML = "<select class='form-control' id='leg_" + elemCounter + "' name='leg_" + elemCounter + "'>";
+            // <select class="form-control" id="startLocation" name="startLocation">
+            for (i = 0; i < locations.length; i = i + 1) {
+                selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>";
+            }
+            selectHTML += "</select>";
+            newDiv.innerHTML = selectHTML;
+            document.getElementById(divName).appendChild(newDiv);
         }
-        selectHTML += "</select>";
-        newDiv.innerHTML = selectHTML;
-        document.getElementById(divName).appendChild(newDiv);
-    }
-
-</script>
+    </script>
 
 
 </body>
