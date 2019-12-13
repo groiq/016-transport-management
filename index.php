@@ -153,7 +153,7 @@
                         </div>
 
                         <div id="dynamicInput"></div>
-                        <div class="form-button">
+                        <div style="display: inline-block; text-align: right; width: 100%">
                             <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
                         </div>
 
@@ -172,7 +172,7 @@
                             <!-- <input type="button" value="Save" /> -->
                         </div>
 
-                        <div class="form-group form-button">
+                        <div class="form-group float-right">
                             <button type="submit" class="btn btn-primary">Transport erstellen</button>
                             <!-- <input type="submit" value="Transport erstellen" /> -->
                         </div>
