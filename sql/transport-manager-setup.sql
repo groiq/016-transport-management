@@ -34,7 +34,7 @@ CREATE TABLE loads (
     target_location_id INT,
     start_time_estimate TIMESTAMP NULL DEFAULT NULL,
     start_time_actual TIMESTAMP NULL DEFAULT NULL,
-    target_time_estimate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    target_time_estimate TIMESTAMP DEFAULT NULL,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (truck_id)
         REFERENCES trucks (truck_id),
@@ -52,12 +52,14 @@ CREATE TABLE load_legs (
     number_in_sequence INT,
     start_time_estimate TIMESTAMP null DEFAULT null, -- calculated value!
     start_time_actual TIMESTAMP null DEFAULT null,
-    target_time_estimate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    target_time_estimate TIMESTAMP DEFAULT NULL,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
     foreign key (load_id) references loads (load_id),
     foreign key (start_location_id) references locations (location_id),
     foreign key (target_location_id) references locations (location_id)
 );
+
+
 
 insert into locations (name,latitude,longitude) values ('Bregenz',47.505,9.749167);
 insert into locations (name,latitude,longitude) values ('Innsbruck',47.267222,11.392778);
