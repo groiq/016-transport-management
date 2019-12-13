@@ -113,7 +113,7 @@
 
     <h1>Transport Management System</h1>
 
-    <h2>Neue Fuhre</h2>
+    <h2>Neuer Transport</h2>
 
     <form action="./index.php" method="post">
         <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
@@ -139,14 +139,13 @@
         </div>
         <div class="form-group">
 
-
-            <label for="startLocation">Von</label>
+            <label for="startLocation">Start</label>
             <select class="form-control" id="startLocation" name="startLocation">
                 <?php
                 offerOptions($locations, "location_id", "name");
                 ?>
             </select>
-            <label for="targetLocation">Nach</label>
+            <label for="targetLocation">Ziel</label>
             <select class="form-control" id="targetLocation" name="targetLocation">
                 <?php
                 offerOptions($locations, "location_id", "name");
@@ -159,7 +158,7 @@
         <!-- <input type="button" value="Save" /> -->
 
         <div class="form-group">
-            <input type="submit" value="Fuhre erstellen" />
+            <input type="submit" value="Transport erstellen" />
         </div>
     </form>
 
