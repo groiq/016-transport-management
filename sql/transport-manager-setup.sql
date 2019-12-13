@@ -12,6 +12,13 @@ CREATE TABLE locations (
     longitude DECIMAL(9 , 6 )
 );
 
+CREATE TABLE distances (
+    distance_id INT PRIMARY KEY AUTO_INCREMENT,
+    start_id INT,
+    target_id INT,
+    distance DECIMAL(8 , 2 )
+);
+
 CREATE TABLE trucks (
     truck_id INT PRIMARY KEY AUTO_INCREMENT,
     license_plate NVARCHAR(8),
@@ -63,6 +70,43 @@ insert into locations (name,latitude,longitude) values ('Wien',48.208333,16.3730
 insert into locations (name,latitude,longitude) values ('Eisenstadt',47.845556,16.518889);
 
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',100.0,50.0,75.0);
+
+insert into distances (start_id,target_id,distance) values (1,2,100);
+insert into distances (start_id,target_id,distance) values (1,3,100);
+insert into distances (start_id,target_id,distance) values (1,4,100);
+insert into distances (start_id,target_id,distance) values (1,5,100);
+insert into distances (start_id,target_id,distance) values (1,6,100);
+insert into distances (start_id,target_id,distance) values (1,7,100);
+insert into distances (start_id,target_id,distance) values (1,8,100);
+insert into distances (start_id,target_id,distance) values (1,9,100);
+insert into distances (start_id,target_id,distance) values (2,3,100);
+insert into distances (start_id,target_id,distance) values (2,4,100);
+insert into distances (start_id,target_id,distance) values (2,5,100);
+insert into distances (start_id,target_id,distance) values (2,6,100);
+insert into distances (start_id,target_id,distance) values (2,7,100);
+insert into distances (start_id,target_id,distance) values (2,8,100);
+insert into distances (start_id,target_id,distance) values (2,9,100);
+insert into distances (start_id,target_id,distance) values (3,4,100);
+insert into distances (start_id,target_id,distance) values (3,5,100);
+insert into distances (start_id,target_id,distance) values (3,6,100);
+insert into distances (start_id,target_id,distance) values (3,7,100);
+insert into distances (start_id,target_id,distance) values (3,8,100);
+insert into distances (start_id,target_id,distance) values (3,9,100);
+insert into distances (start_id,target_id,distance) values (4,5,100);
+insert into distances (start_id,target_id,distance) values (4,6,100);
+insert into distances (start_id,target_id,distance) values (4,7,100);
+insert into distances (start_id,target_id,distance) values (4,8,100);
+insert into distances (start_id,target_id,distance) values (4,9,100);
+insert into distances (start_id,target_id,distance) values (5,6,100);
+insert into distances (start_id,target_id,distance) values (5,7,100);
+insert into distances (start_id,target_id,distance) values (5,8,100);
+insert into distances (start_id,target_id,distance) values (5,9,100);
+insert into distances (start_id,target_id,distance) values (6,7,100);
+insert into distances (start_id,target_id,distance) values (6,8,100);
+insert into distances (start_id,target_id,distance) values (6,9,100);
+insert into distances (start_id,target_id,distance) values (7,8,100);
+insert into distances (start_id,target_id,distance) values (7,9,100);
+insert into distances (start_id,target_id,distance) values (8,9,100);
 
 select * from locations;
 

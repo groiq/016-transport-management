@@ -16,6 +16,16 @@ select * from loads;
 select * from trucks;
 select * from load_legs;
 
+-- locations and distances
+SELECT 
+    *
+FROM
+    locations starts
+        JOIN
+    distances ON starts.location_id = distances.start_id
+        JOIN
+    locations targets ON targets.location_id = distances.target_id;
+
 -- loads with locations 
 SELECT 
     load_id,
