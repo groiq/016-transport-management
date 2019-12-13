@@ -31,13 +31,12 @@
 	);
 	$db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
 	*/
-    // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
-	$pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+    $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
+	// $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
 
-        echo("bin ich drin?");
         // insert a row into loads
         $statement = $pdo->prepare("INSERT INTO loads (start_location_id,truck_id,start_time_estimate) VALUES (?,?,?);");
         $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
@@ -164,16 +163,6 @@
 
     <!-- -------------------------------------------------- -->
     <h1>Debug data</h1>
-
-    <ul>
-        <?php
-        foreach ($locations as $location) {
-            // print_r($locationTuple);
-            echo ("<li>" . $location["name"] . "</li>");
-        }
-        ?>
-
-    </ul>
 
     <pre>
         <?php
