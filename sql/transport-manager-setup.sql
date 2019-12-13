@@ -48,15 +48,18 @@ CREATE TABLE load_legs (
     load_leg_id INT PRIMARY KEY AUTO_INCREMENT,
     load_id INT,
     start_location_id INT,
-    target_location_id int,
+    target_location_id INT,
     number_in_sequence INT,
-    start_time_estimate TIMESTAMP null DEFAULT null, -- calculated value!
-    start_time_actual TIMESTAMP null DEFAULT null,
+    start_time_estimate TIMESTAMP NULL DEFAULT NULL,
+    start_time_actual TIMESTAMP NULL DEFAULT NULL,
     target_time_estimate TIMESTAMP DEFAULT NULL,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
-    foreign key (load_id) references loads (load_id),
-    foreign key (start_location_id) references locations (location_id),
-    foreign key (target_location_id) references locations (location_id)
+    FOREIGN KEY (load_id)
+        REFERENCES loads (load_id),
+    FOREIGN KEY (start_location_id)
+        REFERENCES locations (location_id),
+    FOREIGN KEY (target_location_id)
+        REFERENCES locations (location_id)
 );
 
 
