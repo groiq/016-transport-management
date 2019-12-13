@@ -31,8 +31,8 @@
 	);
 	$db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
 	*/
-    $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
-    // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+    // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
+    $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
@@ -40,12 +40,9 @@
         // set convenience vars
         $legs = $_POST['legs'];
         $lastLegIndex = count($legs) - 1;
-        // $legCount = count($legs);
-        // echo($legCount);
 
         // test output: first and last leg
-        // echo($_POST['legs'][0] . " -> " . $_POST['legs'][]);
-        echo($legs[0] . ' -> ' . $legs[$lastLegIndex] . "\n");
+        // echo($legs[0] . ' -> ' . $legs[$lastLegIndex] . "\n");
  
         // insert a row into loads
         $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id,start_time_estimate) VALUES (?,?,?,?);");
@@ -60,7 +57,7 @@
 
         // insert legs; start counting at 0
         for ($i = 0; $i < $lastLegIndex; $i++) {
-            echo("inserting: " . $legs[$i] . " -> " . $legs[$i+1] . " as leg #" . $i . "\n");
+            // echo("inserting: " . $legs[$i] . " -> " . $legs[$i+1] . " as leg #" . $i . "\n");
             $statement = $pdo -> prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
             $statement->execute(array($newLoadId,$legs[$i],$legs[$i+1],$i+1));
         }
