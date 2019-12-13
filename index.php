@@ -20,19 +20,19 @@
     <?php
 
     // connect to database 
-	// $con=mysqli_init(); mysqli_ssl_set($con, NULL, NULL, {ca-cert filename}, NULL, NULL); mysqli_real_connect($con, "tms-database.mariadb.database.azure.com", "tmsadmin@tms-database", {your_password}, {your_database}, 3306);
-	// $options = array(
-	// PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
-	// );
-	// $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com;port=3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm', $options);
-	/*
+    // $con=mysqli_init(); mysqli_ssl_set($con, NULL, NULL, {ca-cert filename}, NULL, NULL); mysqli_real_connect($con, "tms-database.mariadb.database.azure.com", "tmsadmin@tms-database", {your_password}, {your_database}, 3306);
+    // $options = array(
+    // PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
+    // );
+    // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com;port=3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm', $options);
+    /*
 	$options = array(
 	PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
 	);
 	$db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
 	*/
     $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
-	// $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+    // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
@@ -51,7 +51,7 @@
         $query = $pdo->query("SELECT LAST_INSERT_ID();");
         $queryResult = $query->fetchAll(\PDO::FETCH_ASSOC);
         $lastId = $queryResult[0]['LAST_INSERT_ID()'];
-        
+
         // test output on that
         // print_r($queryResult);
         // echo ("\n");
@@ -60,29 +60,28 @@
         // output values for legs
         // print_r($_POST['legs']);
         // for($i = 0; $i < count($_POST['legs']); $i++) {
-            // echo("seq: " . ($i + 1) . " locId: ");
-            // echo($_POST['legs'][$i]."\n");
+        // echo("seq: " . ($i + 1) . " locId: ");
+        // echo($_POST['legs'][$i]."\n");
         // }
 
         // function for inserting legs
-        function insertLeg($pdo,$loadId,$sequence_number,$location_id) {
+        function insertLeg($pdo, $loadId, $sequence_number, $location_id)
+        {
             // echo("inserting into database: " . " - " . $sequence_number . " - " . $location_id) . "\n";
-			$statement = $pdo->prepare("INSERT INTO load_legs (load_id,location_id,number_in_sequence) VALUES (?,?,?);");
-			// insert into load_legs (load_id,location_id,number_in_sequence) values (2,1,1);
-			$statement->execute(array($loadId,$location_id,$sequence_number));
-
+            $statement = $pdo->prepare("INSERT INTO load_legs (load_id,location_id,number_in_sequence) VALUES (?,?,?);");
+            // insert into load_legs (load_id,location_id,number_in_sequence) values (2,1,1);
+            $statement->execute(array($loadId, $location_id, $sequence_number));
         }
 
         // insert legs into database
-        for($i = 0; $i < count($_POST['legs']); $i++) {
+        for ($i = 0; $i < count($_POST['legs']); $i++) {
             // echo($i+1);
-            insertLeg($pdo,$lastId,($i+1),$_POST['legs'][$i]);
-            
+            insertLeg($pdo, $lastId, ($i + 1), $_POST['legs'][$i]);
         }
 
         // insert target location as final leg
-		// echo("values for target: sequence_number " . count($_POST['legs']) . ", location_id " . $_POST['targetLocation']);
-		insertLeg($pdo, $lastId, count($_POST['legs'])+1,$_POST['targetLocation']);
+        // echo("values for target: sequence_number " . count($_POST['legs']) . ", location_id " . $_POST['targetLocation']);
+        insertLeg($pdo, $lastId, count($_POST['legs']) + 1, $_POST['targetLocation']);
     }
 
     // read data
@@ -139,18 +138,22 @@
         </div>
         <div class="form-group">
 
-            <label for="startLocation">Start</label>
-            <select class="form-control" id="startLocation" name="startLocation">
-                <?php
-                offerOptions($locations, "location_id", "name");
-                ?>
-            </select>
-            <label for="targetLocation">Ziel</label>
-            <select class="form-control" id="targetLocation" name="targetLocation">
-                <?php
-                offerOptions($locations, "location_id", "name");
-                ?>
-            </select>
+            <div>
+                <label for="startLocation">Start</label>
+                <select class="form-control" id="startLocation" name="startLocation">
+                    <?php
+                    offerOptions($locations, "location_id", "name");
+                    ?>
+                </select>
+            </div>
+            <div>
+                <label for="targetLocation">Ziel</label>
+                <select class="form-control" id="targetLocation" name="targetLocation">
+                    <?php
+                    offerOptions($locations, "location_id", "name");
+                    ?>
+                </select>
+            </div>
         </div>
 
         <div id="dynamicInput"></div>
