@@ -37,6 +37,10 @@
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
 
+        if (!isset($_POST["legs"])) {
+            $_POST["legs"] = [];
+        }
+
         // insert a row into loads
         $statement = $pdo->prepare("INSERT INTO loads (start_location_id,truck_id,start_time_estimate) VALUES (?,?,?);");
         $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
