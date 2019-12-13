@@ -37,51 +37,34 @@
     // write to database if there's something in the form
     if (!empty($_POST["dbInsert"])) {
 
-        if (!isset($_POST["legs"])) {
-            $_POST["legs"] = [];
-        }
+        // set convenience vars
+        $legs = $_POST['legs'];
+        $lastLegIndex = count($legs) - 1;
+        // $legCount = count($legs);
+        // echo($legCount);
 
+        // test output: first and last leg
+        // echo($_POST['legs'][0] . " -> " . $_POST['legs'][]);
+        echo($legs[0] . ' -> ' . $legs[$lastLegIndex] . "\n");
+ 
         // insert a row into loads
-        $statement = $pdo->prepare("INSERT INTO loads (start_location_id,truck_id,start_time_estimate) VALUES (?,?,?);");
+        $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id,start_time_estimate) VALUES (?,?,?,?);");
         $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
         $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
-        $statement->execute(array($_POST['startLocation'], $_POST['truck'], $sqlTimestamp));
+        $statement->execute(array($legs[0], $legs[$lastLegIndex], $_POST['truck'], $sqlTimestamp));
 
         // fetch id of new row
         $query = $pdo->query("SELECT LAST_INSERT_ID();");
         $queryResult = $query->fetchAll(\PDO::FETCH_ASSOC);
-        $lastId = $queryResult[0]['LAST_INSERT_ID()'];
+        $newLoadId = $queryResult[0]['LAST_INSERT_ID()'];
 
-        // test output on that
-        // print_r($queryResult);
-        // echo ("\n");
-        // print_r($lastId);
-
-        // output values for legs
-        // print_r($_POST['legs']);
-        // for($i = 0; $i < count($_POST['legs']); $i++) {
-        // echo("seq: " . ($i + 1) . " locId: ");
-        // echo($_POST['legs'][$i]."\n");
-        // }
-
-        // function for inserting legs
-        function insertLeg($pdo, $loadId, $sequence_number, $location_id)
-        {
-            // echo("inserting into database: " . " - " . $sequence_number . " - " . $location_id) . "\n";
-            $statement = $pdo->prepare("INSERT INTO load_legs (load_id,location_id,number_in_sequence) VALUES (?,?,?);");
-            // insert into load_legs (load_id,location_id,number_in_sequence) values (2,1,1);
-            $statement->execute(array($loadId, $location_id, $sequence_number));
+        // insert legs; start counting at 0
+        for ($i = 0; $i < $lastLegIndex; $i++) {
+            echo("inserting: " . $legs[$i] . " -> " . $legs[$i+1] . " as leg #" . $i . "\n");
+            $statement = $pdo -> prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
+            $statement->execute(array($newLoadId,$legs[$i],$legs[$i+1],$i+1));
         }
 
-        // insert legs into database
-        for ($i = 0; $i < count($_POST['legs']); $i++) {
-            // echo($i+1);
-            insertLeg($pdo, $lastId, ($i + 1), $_POST['legs'][$i]);
-        }
-
-        // insert target location as final leg
-        // echo("values for target: sequence_number " . count($_POST['legs']) . ", location_id " . $_POST['targetLocation']);
-        insertLeg($pdo, $lastId, count($_POST['legs']) + 1, $_POST['targetLocation']);
     }
 
     // read data
