@@ -98,66 +98,87 @@
         <h1>Transport Management System</h1>
 
         <div class="card">
+            <!-- <div> -->
 
-            <h2>Neuer Transport</h2>
+            <div class="card-header">
+                <h2 class="card-title">Neuer Transport</h2>
+            </div>
 
-            <form action="./index.php" method="post">
-                <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
+            <!-- <p class="card-body"> -->
+            <div class="card-body">
 
-                <div class="form-group">
+                <form action="./index.php" method="post">
+                    <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
 
-                    <!-- <label class="control-label" for="startTime">Abfahrt</label>
-            <input class="form-control" id="startTime" name="startTime" type="datetime-local"> -->
+                    <div class="form-group">
 
-                    <label class="control-label" for="date">Datum</label>
-                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
+                        <div class="row">
 
-                    <label for="time">Uhrzeit</label>
-                    <input class="form-control" type="time" id="time" name="time">
+                            <div class="col">
+                                <label class="control-label" for="date">Datum</label>
+                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
+                            </div>
+                            <div class="col">
+                                <label for="time">Uhrzeit</label>
+                                <input class="form-control" type="time" id="time" name="time">
 
-                    <label for="truck">Fahrzeug</label>
-                    <select class="form-control" id="truck" name="truck">
-                        <?php
-                        offerOptions($trucks, "truck_id", "license_plate");
-                        ?>
-                    </select>
+                            </div>
 
-                </div>
-                <div class="form-group">
+                        </div>
 
-                    <div>
-                        <label for="startLocation">Start</label>
-                        <!-- <select class="form-control" id="startLocation" name="startLocation"> -->
-                        <select class="form-control" id="startLocation" name="legs[]">
-                            <!-- selectHTML = "<select class='form-control' id='legs[]' name='legs[]'>"; -->
+                        <label for="truck">Fahrzeug</label>
+                        <select class="form-control" id="truck" name="truck">
                             <?php
-                            offerOptions($locations, "location_id", "name");
+                            offerOptions($trucks, "truck_id", "license_plate");
                             ?>
                         </select>
+
                     </div>
-                    <div>
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-sm">
+                                <label for="startLocation">Start</label>
+
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="startLocation" name="legs[]">
+                                    <?php
+                                    offerOptions($locations, "location_id", "name");
+                                    ?>
+                                </select>
+
+                            </div>
+                        </div>
+
                         <div id="dynamicInput"></div>
-                        <input type="button" value="Zwischenhalt hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
-                        <div>
-                            <div>
+                        <div class="form-button">
+                            <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm">
                                 <label for="targetLocation">Ziel</label>
-                                <!-- <select class="form-control" id="targetLocation" name="targetLocation"> -->
+                            </div>
+                            <div class="col">
                                 <select class="form-control" id="targetLocation" name="legs[]">
                                     <?php
                                     offerOptions($locations, "location_id", "name");
                                     ?>
                                 </select>
                             </div>
+
+                            <!-- <input type="button" value="Save" /> -->
                         </div>
 
-                        <!-- <input type="button" value="Save" /> -->
-
-                        <div class="form-group">
-                            <input type="submit" value="Transport erstellen" />
+                        <div class="form-group form-button">
+                            <button type="submit" class="btn btn-primary">Transport erstellen</button>
+                            <!-- <input type="submit" value="Transport erstellen" /> -->
                         </div>
-                    </div>
-            </form>
-            <!-- </div> -->
+                </form>
+
+            </div>
+            <!-- </p> -->
 
         </div>
 
@@ -229,19 +250,29 @@
             // alert(locations);
             elemCounter += 1;
             var newDiv = document.createElement('div');
-            var selectHTML = "";
-            selectHTML = "<select class='form-control' id='legs[]' name='legs[]'>";
+            var selectHTML = '';
+            selectHTML += '<div class="row">\n';
+            selectHTML += '<div class="col-sm">\n';
+            selectHTML += '<label for="leg">Etappe</label>\n';
+            selectHTML += '</div>\n';
+            selectHTML += '<div class="col">\n';
+            selectHTML += '<select class="form-control" id="leg" name="legs[]">\n';
             // selectHTML = "<select class='form-control' id='leg_" + elemCounter + "' name='leg_" + elemCounter + "'>";
             // <select class="form-control" id="startLocation" name="startLocation">
             for (i = 0; i < locations.length; i = i + 1) {
-                selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>";
+                selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>\n";
             }
-            selectHTML += "</select>";
+            selectHTML += '</select>\n';
+            selectHTML += '</div>\n';
+            selectHTML += '</div>\n';
             newDiv.innerHTML = selectHTML;
             document.getElementById(divName).appendChild(newDiv);
         }
     </script>
+    <!-- 
 
+                            </div>
+                        </div> -->
 
 </body>
 
