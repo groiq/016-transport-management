@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
-    
+
 
 
 
@@ -102,7 +102,7 @@
             <!-- <div> -->
 
             <div class="card-header">
-                <h2 class="card-title">Neuer Transport</h2>
+                <h2 class="card-title">Neuen Transport erstellen</h2>
             </div>
 
             <!-- <p class="card-body"> -->
@@ -127,14 +127,21 @@
 
                         </div>
 
-                        <label for="truck">Fahrzeug</label>
-                        <select class="form-control" id="truck" name="truck">
-                            <?php
-                            offerOptions($trucks, "truck_id", "license_plate");
-                            ?>
-                        </select>
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="truck">Fahrzeug</label>
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="truck" name="truck">
+                                    <?php
+                                    offerOptions($trucks, "truck_id", "license_plate");
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
+                    
                     <div class="form-group">
 
                         <div class="row">
@@ -188,6 +195,7 @@
 
 
     <div id="debug">
+        <!-- Apply class .invisible to hide this div. -->
 
         <h1>Debug data</h1>
 
