@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
+    
 
 
 
@@ -137,7 +138,7 @@
                     <div class="form-group">
 
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-3">
                                 <label for="startLocation">Start</label>
 
                             </div>
@@ -157,7 +158,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-3">
                                 <label for="targetLocation">Ziel</label>
                             </div>
                             <div class="col">
@@ -252,7 +253,7 @@
             var newDiv = document.createElement('div');
             var selectHTML = '';
             selectHTML += '<div class="row">\n';
-            selectHTML += '<div class="col-sm">\n';
+            selectHTML += '<div class="col-3">\n';
             selectHTML += '<label for="leg">Etappe</label>\n';
             selectHTML += '</div>\n';
             selectHTML += '<div class="col">\n';
