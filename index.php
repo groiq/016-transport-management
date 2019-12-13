@@ -71,7 +71,7 @@
             // $newLoadId = $queryResult[0]['LAST_INSERT_ID()'];
             // echo($newLoadId);
 
-            // insert legs; start counting at 0
+            // insert legs; start counting at 1
             for ($i = 0; $i < $lastLegIndex; $i++) {
                 // echo("inserting: " . $legs[$i] . " -> " . $legs[$i+1] . " as leg #" . $i . "\n");
                 $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
