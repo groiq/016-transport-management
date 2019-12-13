@@ -50,12 +50,12 @@ SELECT
     load_id,
     truck_id,
     loads.start_location_id,
-    start_locations.name AS start_loc_name,
+    start_locations.name AS start_location,
     loads.target_location_id,
-    target_locations.name AS target_loc_name,
+    target_locations.name AS target_location,
     load_legs.number_in_sequence AS leg_sequence_number,
-    leg_start_locations.name,
-    leg_target_locations.name
+    leg_start_locations.name as leg_start_location,
+    leg_target_locations.name as leg_target_location
 FROM
     trucks
         RIGHT JOIN
@@ -111,3 +111,4 @@ FROM
     locations leg_location ON load_legs.location_id = leg_location.location_id
 ORDER BY number_in_sequence;
 
+-- calculating total distance
