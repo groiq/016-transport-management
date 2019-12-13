@@ -14,6 +14,7 @@ select * from locations;
 
 select * from loads;
 select * from trucks;
+select * from load_legs;
 
 -- loads with locations 
 SELECT 
@@ -42,8 +43,9 @@ SELECT
     start_locations.name AS start_loc_name,
     loads.target_location_id,
     target_locations.name AS target_loc_name,
-    leg_locations.location_id as leg_loc_id, leg_locations.name as leg_loc_name,
-    load_legs.number_in_sequence as leg_sequence_number
+    load_legs.number_in_sequence AS leg_sequence_number,
+    leg_start_locations.name,
+    leg_target_locations.name
 FROM
     trucks
         RIGHT JOIN
@@ -55,7 +57,10 @@ FROM
         LEFT JOIN
     load_legs USING (load_id)
         LEFT JOIN
-    locations leg_locations ON leg_locations.location_id = load_legs.location_id
+    locations leg_start_locations ON leg_start_locations.location_id = load_legs.start_location_id
+        LEFT JOIN
+    locations leg_target_locations ON leg_target_locations.location_id = load_legs.target_location_id
+ORDER BY load_id , leg_sequence_number
 ;
 
 describe trucks;
