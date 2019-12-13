@@ -140,15 +140,22 @@
 
             <div>
                 <label for="startLocation">Start</label>
-                <select class="form-control" id="startLocation" name="startLocation">
-                    <?php
+                <!-- <select class="form-control" id="startLocation" name="startLocation"> -->
+                <select class="form-control" id="startLocation" name="legs[]">
+                <!-- selectHTML = "<select class='form-control' id='legs[]' name='legs[]'>"; -->
+                   <?php
                     offerOptions($locations, "location_id", "name");
                     ?>
                 </select>
             </div>
             <div>
+            <div id="dynamicInput"></div>
+        <input type="button" value="Zwischenhalt hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
+        <div>
+            <div>
                 <label for="targetLocation">Ziel</label>
-                <select class="form-control" id="targetLocation" name="targetLocation">
+                <!-- <select class="form-control" id="targetLocation" name="targetLocation"> -->
+                <select class="form-control" id="targetLocation" name="legs[]">
                     <?php
                     offerOptions($locations, "location_id", "name");
                     ?>
@@ -156,8 +163,6 @@
             </div>
         </div>
 
-        <div id="dynamicInput"></div>
-        <input type="button" value="Add" onclick="addInput('dynamicInput');" />
         <!-- <input type="button" value="Save" /> -->
 
         <div class="form-group">
