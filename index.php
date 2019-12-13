@@ -94,107 +94,130 @@
 
     </div>
 
-    <div class="container">
+    <div class="container d-flex flex-column">
 
-        <h1>Transport Management System</h1>
+        <!-- <div class="row"> -->
+            <h1 class="text-center align-self-center">Transport Management System</h1>
+        <!-- </div> -->
 
-        <div class="card">
-            <!-- <div> -->
+        <!-- <div class="row"> -->
 
-            <div class="card-header">
-                <h2 class="card-title">Neuen Transport erstellen</h2>
+            <!-- <div class="card col-lg"> -->
+            <div class="card align-self-center" style="max-width: 500px">
+                <!-- <div> -->
+
+                <div class="card-header">
+                    <h2 class="card-title">Neuen Transport erstellen</h2>
+                </div>
+
+                <!-- <p class="card-body"> -->
+                <div class="card-body">
+
+                    <form action="./index.php" method="post">
+                        <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
+
+                        <div class="form-group">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <label class="control-label" for="date">Datum</label>
+                                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
+                                </div>
+                                <div class="col">
+                                    <label for="time">Uhrzeit</label>
+                                    <input class="form-control" type="time" id="time" name="time">
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="truck">Fahrzeug</label>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" id="truck" name="truck">
+                                        <?php
+                                        offerOptions($trucks, "truck_id", "license_plate");
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="startLocation">Start</label>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" id="startLocation" name="legs[]">
+                                        <?php
+                                        offerOptions($locations, "location_id", "name");
+                                        ?>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div id="dynamicInput">
+                            </div>
+                            <div style="display: inline-block; text-align: right; width: 100%">
+                                <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
+                            </div>
+
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="targetLocation">Ziel</label>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" id="targetLocation" name="legs[]">
+                                        <?php
+                                        offerOptions($locations, "location_id", "name");
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <!-- <input type="button" value="Save" /> -->
+                            </div>
+
+                            <div class="form-group float-right">
+                                <button type="submit" class="btn btn-primary">Transport erstellen</button>
+                                <!-- <input type="submit" value="Transport erstellen" /> -->
+                            </div>
+                    </form>
+
+                </div>
+                <!-- </p> -->
+
             </div>
-
-            <!-- <p class="card-body"> -->
-            <div class="card-body">
-
-                <form action="./index.php" method="post">
-                    <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
-
-                    <div class="form-group">
-
-                        <div class="row">
-
-                            <div class="col">
-                                <label class="control-label" for="date">Datum</label>
-                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
-                            </div>
-                            <div class="col">
-                                <label for="time">Uhrzeit</label>
-                                <input class="form-control" type="time" id="time" name="time">
-
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-3">
-                                <label for="truck">Fahrzeug</label>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="truck" name="truck">
-                                    <?php
-                                    offerOptions($trucks, "truck_id", "license_plate");
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <div class="form-group">
-
-                        <div class="row">
-                            <div class="col-3">
-                                <label for="startLocation">Start</label>
-
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="startLocation" name="legs[]">
-                                    <?php
-                                    offerOptions($locations, "location_id", "name");
-                                    ?>
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div id="dynamicInput"></div>
-                        <div style="display: inline-block; text-align: right; width: 100%">
-                            <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
-                        </div>
-
-                        <div class="row">
-                            <div class="col-3">
-                                <label for="targetLocation">Ziel</label>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="targetLocation" name="legs[]">
-                                    <?php
-                                    offerOptions($locations, "location_id", "name");
-                                    ?>
-                                </select>
-                            </div>
-
-                            <!-- <input type="button" value="Save" /> -->
-                        </div>
-
-                        <div class="form-group float-right">
-                            <button type="submit" class="btn btn-primary">Transport erstellen</button>
-                            <!-- <input type="submit" value="Transport erstellen" /> -->
-                        </div>
-                </form>
-
-            </div>
-            <!-- </p> -->
 
         </div>
+
+        <!-- <div class="card col-lg"> -->
+        <div class="card invisible">
+
+
+            <div class="card-header">
+                <h2 class="card-title">Meine Transporte</h2>
+            </div>
+
+            <div class="card-body">
+                Lorem ipsum dolor sit amet und überhaupt.
+            </div>
+
+        </div>
+
+    <!-- </div> -->
 
     </div>
 
 
 
-    <div id="debug">
+    <div id="debug" class="invisible">
         <!-- Apply class .invisible to hide this div. -->
 
         <h1>Debug data</h1>
