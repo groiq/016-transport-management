@@ -95,10 +95,25 @@
 
     </div>
 
-    <div class="container d-flex flex-column">
+ 
+    <!-- <header>
+        <h1>
+            TMS
+        </h1>
+    </header> -->
+    <div class="jumbotron jumbotron-fluid bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4">
+                TMS
+            </h1>
+        </div>
+    </div>
 
-        <!-- <div class="row"> -->
-        <h1 class="text-center align-self-center">TMS</h1>
+    <div class="container d-flex flex-column">
+        <!-- <div class="container"> -->
+
+       <!-- <div class="row"> -->
+        <!-- <h1 class="text-center align-self-center">TMS</h1> -->
         <!-- </div> -->
 
         <!-- <div class="row"> -->
