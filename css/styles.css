@@ -2,8 +2,44 @@
 @import url('https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap');
 
- h1 {
+ body {
+    height: 100%;
+}
+
+/* .bg {
+    background-image: url('../imgs/truck-background.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+body {
+    background-image: url('../imgs/truck-background-blurred.jpg');
+    backgrouund-position: center;
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+h1, h2 {
     /* font-family: 'Rubik Mono One', sans-serif; */
     font-family: 'Black Ops One', sans-serif;
     font-weight: bold;
+    text-align: center;
 }
+
+#main {
+    margin-top: 5em;
+}
+
+#form {
+    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.6);
+
+}
+
+.maxwidth {
+    max-width: 500px;
+}
+
