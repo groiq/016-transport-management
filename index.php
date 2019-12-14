@@ -97,26 +97,25 @@
     <div class="container d-flex flex-column">
 
         <!-- <div class="row"> -->
-            <h1 class="text-center align-self-center">Transport Management System</h1>
+        <h1 class="text-center align-self-center">TMS</h1>
         <!-- </div> -->
 
         <!-- <div class="row"> -->
 
-            <!-- <div class="card col-lg"> -->
-            <div class="card align-self-center" style="max-width: 500px">
-                <!-- <div> -->
+        <!-- <div class="card col-lg"> -->
+        <div class="align-self-center" style="max-width: 500px">
+            <!-- <div> -->
 
-                <div class="card-header">
-                    <h2 class="card-title">Neuen Transport erstellen</h2>
-                </div>
+            <h2 class="">Neuer Transport</h2>
 
-                <!-- <p class="card-body"> -->
-                <div class="card-body">
 
-                    <form action="./index.php" method="post">
-                        <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
+            <!-- <p class="card-body"> -->
+            <div class="">
 
-                        <div class="form-group">
+                <form action="./index.php" method="post">
+                    <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
+
+                    <!-- <div class="form-group">
 
                             <div class="row">
 
@@ -130,94 +129,66 @@
 
                                 </div>
 
-                            </div>
+                            </div> -->
 
-                            <div class="row">
-                                <div class="col-3">
-                                    <label for="truck">Fahrzeug</label>
-                                </div>
-                                <div class="col">
-                                    <select class="form-control" id="truck" name="truck">
-                                        <?php
-                                        offerOptions($trucks, "truck_id", "license_plate");
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <label for="truck">Truck:</label>
+                        <select class="form-control" id="truck" name="truck">
+                            <?php
+                            offerOptions($trucks, "truck_id", "license_plate");
+                            ?>
+                        </select>
+                    </div>
 
-                        </div>
+                    <!-- </div> -->
 
-                        <div class="form-group">
+                    <div class="form-group">
+                        <label for="startLocation">Von:</label>
+                        <select class="form-control" id="startLocation" name="startLocation">
+                            <?php
+                            offerOptions($locations, "location_id", "name");
+                            ?>
+                        </select>
+                    </div>
 
-                            <div class="row">
-                                <div class="col-3">
-                                    <label for="startLocation">Start</label>
-                                </div>
-                                <div class="col">
-                                    <select class="form-control" id="startLocation" name="legs[]">
-                                        <?php
-                                        offerOptions($locations, "location_id", "name");
-                                        ?>
-                                    </select>
+                    <div class="form-group">
+                        <label for="targetLocation">Nach:</label>
+                        <select class="form-control" id="targetLocation" name="targetLocation">
+                            <?php
+                            offerOptions($locations, "location_id", "name");
+                            ?>
+                        </select>
+                    </div>
 
-                                </div>
-                            </div>
+                    <div id="dynamicInput">
+                    </div>
 
-                            <div id="dynamicInput">
-                            </div>
-                            <div style="display: inline-block; text-align: right; width: 100%">
-                                <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
-                            </div>
+                    <div class="form-group">
+                        <input type="button" class="btn btn-block btn-primary" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
+                    </div>
 
-                            <div class="row">
-                                <div class="col-3">
-                                    <label for="targetLocation">Ziel</label>
-                                </div>
-                                <div class="col">
-                                    <select class="form-control" id="targetLocation" name="legs[]">
-                                        <?php
-                                        offerOptions($locations, "location_id", "name");
-                                        ?>
-                                    </select>
-                                </div>
+                    <!-- <div style="display: inline-block; text-align: right; width: 100%"> -->
+                    <!-- <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" /> -->
+                    <!-- </div> -->
 
-                                <!-- <input type="button" value="Save" /> -->
-                            </div>
 
-                            <div class="form-group float-right">
-                                <button type="submit" class="btn btn-primary">Transport erstellen</button>
-                                <!-- <input type="submit" value="Transport erstellen" /> -->
-                            </div>
-                    </form>
-
-                </div>
-                <!-- </p> -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-primary">Transport erstellen</button>
+                        <!-- <input type="submit" value="Transport erstellen" /> -->
+                    </div>
+                </form>
 
             </div>
+            <!-- </p> -->
 
         </div>
-
-        <!-- <div class="card col-lg"> -->
-        <div class="card invisible">
-
-
-            <div class="card-header">
-                <h2 class="card-title">Meine Transporte</h2>
-            </div>
-
-            <div class="card-body">
-                Lorem ipsum dolor sit amet und überhaupt.
-            </div>
-
-        </div>
-
-    <!-- </div> -->
 
     </div>
 
 
 
-    <div id="debug" class="invisible">
+
+    <div id="debug" style="display: none">
         <!-- Apply class .invisible to hide this div. -->
 
         <h1>Debug data</h1>
@@ -274,30 +245,61 @@
     <!-- var locations = <?php echo json_encode($locations); ?>; -->
 
     <script type="text/javascript">
-        var choices = ["one", "two"];
+        // var choices = ["one", "two"];
         var elemCounter = 0;
 
         function addInput(divName) {
+
             var locations = <?php echo json_encode($locations); ?>;
             // alert(locations);
             elemCounter += 1;
+
             var newDiv = document.createElement('div');
+            var formGroupAttr = document.createAttribute('class');
+            formGroupAttr.nodeValue = 'form-group';
+            newDiv.setAttributeNode(formGroupAttr);
+
+            var labelDiv = document.createElement('label');
+            var labelAttr = document.createAttribute('for');
+            labelAttr.nodeValue = 'leg';
+            labelDiv.setAttributeNode(labelAttr);
+            labelDiv.innerHTML = 'Etappe:';
+            newDiv.appendChild(labelDiv);
+
+            var selectDiv = document.createElement('select');
+            var selectClassAttr = document.createAttribute('class');
+            selectClassAttr.nodeValue = 'form-control';
+            selectDiv.setAttributeNode(selectClassAttr);
+            var selectIdAttr = document.createAttribute('id');
+            selectIdAttr.nodeValue = 'leg';
+            selectDiv.setAttributeNode(selectIdAttr);
+            var selectNameAttr = document.createAttribute('name');
+            selectNameAttr.nodeValue = 'legs[]';
+            selectDiv.setAttributeNode(selectNameAttr);
+            newDiv.appendChild(selectDiv);
+
+            for (i = 0; i < locations.length; i = i + 1) {
+                var newOption = document.createElement('option');
+                var optionValueAttr = document.createAttribute('value');
+                optionValueAttr.nodeValue = locations[i]['location_id'];
+                newOption.setAttributeNode(optionValueAttr);
+                newOption.innerHTML = locations[i]['name'];
+                selectDiv.appendChild(newOption);
+            }
+
+
+
             var selectHTML = '';
-            selectHTML += '<div class="row">\n';
-            selectHTML += '<div class="col-3">\n';
+            // selectHTML += '<div class="form-group">\n';
             selectHTML += '<label for="leg">Etappe</label>\n';
-            selectHTML += '</div>\n';
-            selectHTML += '<div class="col">\n';
             selectHTML += '<select class="form-control" id="leg" name="legs[]">\n';
-            // selectHTML = "<select class='form-control' id='leg_" + elemCounter + "' name='leg_" + elemCounter + "'>";
-            // <select class="form-control" id="startLocation" name="startLocation">
             for (i = 0; i < locations.length; i = i + 1) {
                 selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>\n";
             }
             selectHTML += '</select>\n';
-            selectHTML += '</div>\n';
-            selectHTML += '</div>\n';
-            newDiv.innerHTML = selectHTML;
+            // selectHTML += '</div>\n';
+            // newDiv.innerHTML = 'selectHTML';
+
             document.getElementById(divName).appendChild(newDiv);
         }
     </script>
