@@ -106,7 +106,10 @@
         <!-- <div class="container"> -->
             <!-- <div class="maxwidth"> -->
             <h1>
-                TMS
+                <span class="align-middle">
+                    TMS
+                </span>
+                <!-- TMS -->
             </h1>
         <!-- </div> -->
     </div>
