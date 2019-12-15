@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap');
 
- body {
+html, body {
     height: 100%;
 }
 
