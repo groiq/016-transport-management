@@ -16,7 +16,10 @@
 </head>
 
 <body>
-    <div id="wrapper">
+
+    <div id="bg-img-wrapper">
+
+    <div id="content-wrapper">
 
 <!-- <div class="bg">
 </div> -->
@@ -238,6 +241,8 @@
         ?>
         </pre>
 
+
+    </div>
 
     </div>
 
