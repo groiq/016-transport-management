@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" href="./apple-touch-icon.png"> -->
 
     <title>Transport Management System</title>
 </head>
@@ -17,6 +17,9 @@
 
 <!-- <div class="bg">
 </div> -->
+<!-- <div class="container bg-primary text-white p-8" style="margin-top: 5em; padding: 5em">
+<h1>TMS</h1>
+    </div> -->
 
     <div id="controller">
 
