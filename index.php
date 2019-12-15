@@ -12,11 +12,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <title>TMS-05</title>
+    <title>TMS-06</title>
 </head>
 
 <body>
 
+    <div id="bg-color-wrapper">
     <div id="bg-img-wrapper">
 
     <div id="content-wrapper">
@@ -202,6 +203,7 @@
         </div>
 
     </div>
+    
 
 
 
@@ -241,6 +243,8 @@
         ?>
         </pre>
 
+
+    </div>
 
     </div>
 
