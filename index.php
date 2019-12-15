@@ -266,13 +266,12 @@
     <!-- var locations = <?php echo json_encode($locations); ?>; -->
 
     <script type="text/javascript">
-        // var choices = ["one", "two"];
+    
         var elemCounter = 0;
 
         function addInput(divName) {
 
             var locations = <?php echo json_encode($locations); ?>;
-            // alert(locations);
             elemCounter += 1;
 
             var newDiv = document.createElement('div');
@@ -308,26 +307,10 @@
                 selectDiv.appendChild(newOption);
             }
 
-
-
-            var selectHTML = '';
-            // selectHTML += '<div class="form-group">\n';
-            selectHTML += '<label for="leg">Etappe</label>\n';
-            selectHTML += '<select class="form-control" id="leg" name="legs[]">\n';
-            for (i = 0; i < locations.length; i = i + 1) {
-                selectHTML += "<option value='" + locations[i]['location_id'] + "'>" + locations[i]['name'] + "</option>\n";
-            }
-            selectHTML += '</select>\n';
-            // selectHTML += '</div>\n';
-            // newDiv.innerHTML = 'selectHTML';
-
             document.getElementById(divName).appendChild(newDiv);
         }
-    </script>
-    <!-- 
 
-                            </div>
-                        </div> -->
+    </script>
 
 </body>
 
