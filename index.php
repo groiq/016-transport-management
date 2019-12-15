@@ -8,8 +8,11 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
     <link rel="stylesheet" href="./css/styles.css">
     <!-- <link rel="apple-touch-icon" href="./apple-touch-icon.png"> -->
+    <link rel="apple-touch-startup-image" href="./imgs/launch.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#007bff">
 
-    <title>Transport Management System</title>
+    <title>TMS</title>
 </head>
 
 <body>
