@@ -172,7 +172,6 @@ USE `transport_management`$$
 CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_location_param int, number_in_sequence_param int)
 BEGIN
 	insert into load_legs (load_id, start_location_id, target_location_id, number_in_sequence) values (load_param, start_location_param, target_location_param, number_in_sequence_param);
-	
 END$$
 
 DELIMITER ;

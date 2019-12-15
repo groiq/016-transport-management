@@ -23,9 +23,9 @@
 
         <?php
 
-        echo("<pre>");
-        print_r($_POST);
-        echo("</pre>");
+        // echo("<pre>");
+        // print_r($_POST);
+        // echo("</pre>");
 
         // function for dropdown lists should be unnecessary on this page
         // function offerOptions($optionList, $optionValue, $optionName)
@@ -55,32 +55,39 @@
         // write to database if there's something in the form
         if (!empty($_POST["dbInsert"])) {
 
-            // set convenience vars
-            $legs = $_POST['legs'];
-            $lastLegIndex = count($legs) - 1;
-
             // insert a row into loads
-            // $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
-            $statement = $pdo->prepare("call add_load(?,?,?)");
-            // CREATE PROCEDURE `add_load` (start_location_param int, target_location_param int, truck_param int)
-            // call add_load(1,2,1);
-            // $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
-            // $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
+            // stored procedure doesn't work with pdo->lastInsertId,
+            // gotta fall back to direct insert
+            $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
+            // $statement = $pdo->prepare("call add_load(?,?,?);");
+
             $statement->execute(array($_POST['startLocation'], $_POST['targetLocation'], $_POST['truck']));
             $statement = null;
 
             // fetch id of new row
             $newLoadId = $pdo->lastInsertId();
 
-            // insert legs; start counting at 1
-            // later: leave the sequence count to the database!
-            // call add_leg(2,1,3,1);
-            // CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_location_param int, number_in_sequence_param int)
-            for ($i = 0; $i < $lastLegIndex; $i++) {
-                $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
-                $statement->execute(array($newLoadId, $legs[$i], $legs[$i + 1], $i + 1));
-                $statement = null;
+            $addLegStatement = $pdo->prepare("call add_leg(?,?,?,?);");
+
+            // If there are entries for legs, insert start location to first leg,
+            // then go through legs, then insert last leg to target location.
+            // Otherwise just set a leg from start to target.
+            if (isset($_POST['legs'])) {
+                // set convenience vars
+                $legs = $_POST['legs'];
+                $lastLegIndex = count($legs) - 1;
+                // insert legs; start counting at 0
+                // later: leave the sequence count to the database!
+                $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $legs[0], 0));
+                for ($i = 0; $i < $lastLegIndex; $i++) {
+                    // $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
+                    $addLegStatement->execute(array($newLoadId, $legs[$i], $legs[$i + 1], $i + 1));
+                }
+                $addLegStatement->execute(array($newLoadId, $legs[$lastLegIndex], $_POST['targetLocation'], $lastLegIndex + 1));
+            } else {
+                $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $_POST['targetLocation'], 0));
             }
+            $addLegStatement = null;
         }
 
 
