@@ -22,6 +22,7 @@ html, body {
 } */
 
 body {
+    background-color: #007bff;
     background-image: url('../imgs/truck-background-blurred.jpg');
     backgrouund-position: center;
     background-repeat:no-repeat;
