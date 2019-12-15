@@ -4,7 +4,8 @@
 
 html, body {
     width: 100%;
-    height: 100%;
+    /* increased height to cover ios status bar */
+    height: 120%;
 }
 
 #wrapper {
@@ -22,6 +23,7 @@ html, body {
 } */
 
 body {
+    /* height: 120%; */
     background-color: #007bff;
     background-image: url('../imgs/truck-background-blurred.jpg');
     backgrouund-position: center;
