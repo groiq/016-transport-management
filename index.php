@@ -10,16 +10,15 @@
     <!-- <link rel="apple-touch-icon" href="./apple-touch-icon.png"> -->
     <link rel="apple-touch-startup-image" href="./imgs/launch.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
 
-    <title>TMS-06</title>
+    <title>TMS</title>
 </head>
 
 <body>
 
-    <div id="bg-color-wrapper">
+    <!-- <div id="bg-color-wrapper"> -->
     <div id="bg-img-wrapper">
-
     <div id="content-wrapper">
 
 <!-- <div class="bg">
@@ -97,7 +96,6 @@
 
     </div>
 
- 
     <!-- <header>
         <h1>
             TMS
@@ -203,11 +201,7 @@
         </div>
 
     </div>
-    
-
-
-
-
+   
     <div id="debug" style="display: none">
         <!-- Apply class .invisible to hide this div. -->
 
@@ -250,7 +244,7 @@
 
     </div>
 
-    </div>
+    <!-- </div> -->
 
     <!-- </div> -->
 
