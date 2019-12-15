@@ -3,7 +3,14 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap');
 
 html, body {
+    width: 100%;
     height: 100%;
+}
+
+#wrapper {
+    width: 100%;
+    height: 100%;
+    overflow:scroll;
 }
 
 /* .bg {

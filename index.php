@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <div id="wrapper">
 
 <!-- <div class="bg">
 </div> -->
@@ -245,6 +246,8 @@
 
     </div>
 
+    </div>
+
     <!-- </div> -->
 
     <!-- Optional JavaScript -->
@@ -266,7 +269,7 @@
     <!-- var locations = <?php echo json_encode($locations); ?>; -->
 
     <script type="text/javascript">
-    
+
         var elemCounter = 0;
 
         function addInput(divName) {
