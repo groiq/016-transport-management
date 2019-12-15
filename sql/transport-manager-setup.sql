@@ -113,7 +113,7 @@ insert into distances (start_id,target_id,distance) values (7,8,100);
 insert into distances (start_id,target_id,distance) values (7,9,100);
 insert into distances (start_id,target_id,distance) values (8,9,100);
 
-select * from locations;
+-- select * from locations;
 
 /*
 insert into loads (truck_id, start_location_id,start_time_estimate) values (1,3,current_timestamp);
@@ -147,4 +147,52 @@ FROM
         JOIN
     locations leg_locations ON leg_locations.location_id = load_legs.location_id
 ;
+*/
+
+-- stored procedures
+
+USE `transport_management`;
+DROP procedure IF EXISTS `add_load`;
+
+DELIMITER $$
+USE `transport_management`$$
+CREATE PROCEDURE `add_load` (start_location_param int, target_location_param int, truck_param int)
+BEGIN
+	-- $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
+	insert into loads (start_location_id,target_location_id,truck_id) values (start_location_param,target_location_param,truck_param);
+END$$
+
+DELIMITER ;
+
+USE `transport_management`;
+DROP procedure IF EXISTS `add_leg`;
+
+DELIMITER $$
+USE `transport_management`$$
+CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_location_param int, number_in_sequence_param int)
+BEGIN
+	insert into load_legs (load_id, start_location_id, target_location_id, number_in_sequence) values (load_param, start_location_param, target_location_param, number_in_sequence_param);
+	
+END$$
+
+DELIMITER ;
+
+
+
+/*
+            $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
+            // $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
+            // $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
+            $statement->execute(array($legs[0], $legs[$lastLegIndex], $_POST['truck']));
+            $statement = null;
+
+            // fetch id of new row
+            $newLoadId = $pdo->lastInsertId();
+
+            // insert legs; start counting at 1
+            for ($i = 0; $i < $lastLegIndex; $i++) {
+                $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
+                $statement->execute(array($newLoadId, $legs[$i], $legs[$i + 1], $i + 1));
+                $statement = null;
+            }
 */

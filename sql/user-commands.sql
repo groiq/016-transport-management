@@ -92,3 +92,6 @@ FROM
 ORDER BY load_id , leg_sequence_number
 ;
 
+call add_load(1,2,1);
+call add_leg(2,1,3,1);
+call add_leg(2,3,2,2);
