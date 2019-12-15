@@ -10,7 +10,7 @@
     <!-- <link rel="apple-touch-icon" href="./apple-touch-icon.png"> -->
     <link rel="apple-touch-startup-image" href="./imgs/launch.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
     <link rel="icon" href="./imgs/favicon.png" type="image/png">
 
     <title>TMS</title>
