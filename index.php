@@ -8,10 +8,6 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
     <link rel="stylesheet" href="./css/styles.css">
 
-
-
-
-
     <title>Transport Management System</title>
 </head>
 
@@ -58,26 +54,18 @@
             $legs = $_POST['legs'];
             $lastLegIndex = count($legs) - 1;
 
-            // test output: first and last leg
-            // echo($legs[0] . ' -> ' . $legs[$lastLegIndex] . "\n");
-
             // insert a row into loads
-            $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id,start_time_estimate) VALUES (?,?,?,?);");
-            $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
-            $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
-            $statement->execute(array($legs[0], $legs[$lastLegIndex], $_POST['truck'], $sqlTimestamp));
+            $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
+            // $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
+            // $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
+            $statement->execute(array($legs[0], $legs[$lastLegIndex], $_POST['truck']));
             $statement = null;
 
             // fetch id of new row
             $newLoadId = $pdo->lastInsertId();
-            // $query = $pdo->query("SELECT LAST_INSERT_ID();");
-            // $queryResult = $query->fetchAll(\PDO::FETCH_ASSOC);
-            // $newLoadId = $queryResult[0]['LAST_INSERT_ID()'];
-            // echo($newLoadId);
 
             // insert legs; start counting at 1
             for ($i = 0; $i < $lastLegIndex; $i++) {
-                // echo("inserting: " . $legs[$i] . " -> " . $legs[$i+1] . " as leg #" . $i . "\n");
                 $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
                 $statement->execute(array($newLoadId, $legs[$i], $legs[$i + 1], $i + 1));
                 $statement = null;
