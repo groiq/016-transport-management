@@ -226,16 +226,14 @@
                 <h2>Debug output</h2>
 
                 <?php
-                    echo('<div style="overflow:hidden">');
                     echo("<pre>");
 
                     print_r($_POST);
                     echo("\n\n");
 
-                    print_r($loadLegData);
+                    print_r($loadLegData[0]);
 
                     echo("</pre>");
-                    echo('</div>');
                 ?>
 
             </div>
