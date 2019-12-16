@@ -169,29 +169,30 @@ DROP procedure IF EXISTS `add_leg`;
 
 DELIMITER $$
 USE `transport_management`$$
-CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_location_param int, number_in_sequence_param int)
+CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_location_param int)
 BEGIN
-	insert into load_legs (load_id, start_location_id, target_location_id, number_in_sequence) values (load_param, start_location_param, target_location_param, number_in_sequence_param);
+	declare number_in_sequence_next int default 0;
+    set number_in_sequence_next = ((select max(number_in_sequence) from load_legs where load_id = load_param)+1);
+    if (number_in_sequence_next is null) then
+		set number_in_sequence_next = 1;
+	end if;
+	insert into load_legs (load_id, start_location_id, target_location_id, number_in_sequence) values (load_param, start_location_param, target_location_param, number_in_sequence_next);
 END$$
 
 DELIMITER ;
 
-
-
-/*
-            $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
-            // $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
-            // $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
-            $statement->execute(array($legs[0], $legs[$lastLegIndex], $_POST['truck']));
-            $statement = null;
-
-            // fetch id of new row
-            $newLoadId = $pdo->lastInsertId();
-
-            // insert legs; start counting at 1
-            for ($i = 0; $i < $lastLegIndex; $i++) {
-                $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
-                $statement->execute(array($newLoadId, $legs[$i], $legs[$i + 1], $i + 1));
-                $statement = null;
-            }
-*/
+drop view if exists full_load_data;
+CREATE VIEW load_leg_data AS
+    (SELECT 
+        load_id,
+        number_in_sequence,
+        start_location_id,
+        start_location.name AS start_location_name,
+        target_location_id,
+        target_location.name AS target_location_name
+    FROM
+        locations start_location
+            JOIN
+        load_legs ON start_location.location_id = load_legs.start_location_id
+            JOIN
+        locations target_location ON load_legs.target_location_id = target_location.location_id);

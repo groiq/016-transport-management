@@ -92,10 +92,6 @@ FROM
 ORDER BY load_id , leg_sequence_number
 ;
 
-call add_load(1,2,1);
-call add_leg(1,1,3,1);
-call add_leg(1,3,2,2);
-
 -- legs with locations
 SELECT 
     load_leg_id, load_id, number_in_sequence, start_location_id, start_loc.name, target_location_id, target_loc.name
@@ -108,6 +104,7 @@ FROM
 ORDER BY load_id , number_in_sequence;
 
 SELECT 
+	load_id,
     number_in_sequence,
     start_location_id,
     start_location.name AS start_location_name,
@@ -118,6 +115,11 @@ FROM
         JOIN
     load_legs ON start_location.location_id = load_legs.start_location_id
         JOIN
-    locations target_location ON load_legs.target_location_id = target_location.location_id
-    where load_id = 2;
+    locations target_location ON load_legs.target_location_id = target_location.location_id;
+
+call add_load(1,2,1);
+call add_leg(1,1,3);
+call add_leg(1,3,2);
     
+select * from load_leg_data;
+select * from load_leg_data where load_id = 2;
