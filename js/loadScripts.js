@@ -37,8 +37,10 @@ $(document).ready(function(){
 
     // currentDate();
 
+    $('div.currentLeg .future').hide();
     $('div.currentLeg .past').hide();
     $('div.futureLeg .current').hide();
+    $('div.futureLeg .past').hide();
 
     $('button').click(function(){
 
