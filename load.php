@@ -9,6 +9,15 @@
     <link rel="apple-touch-startup-image" href="./imgs/launch.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="icon" href="./imgs/favicon.png" type="image/png">
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="./js/loadScripts.js">
+     
+
+    </script>
+
 
     <title>TMS</title>
 </head>
@@ -34,7 +43,6 @@
         //         echo ("<option value='" . $option[$optionValue] . "'>" . $option[$optionName] . "</option>\n");
         //     }
         // }
-
 
         // connect to database 
 
@@ -110,108 +118,53 @@
     <div class="container d-flex flex-column" id="main">
  
        <div class="align-self-center maxwidth p-1" id="form">
-    
-            <h2 class="">Aktueller Transport</h2>
 
-            <div>
-                Abfahrt: Salzburg
-            </div>
-            <div class="past collapse" id="start-past">
+            <h2>Aktueller Transport</h2>
+
+            <div class="currentLeg" id="0">
                 <div>
+                    Abfahrt: Salzburg
+                </div>
+                <div class="past">
+                    13:45
+                </div>
+                <div class="current row">
+                    <div class="col currentTime">
+                    </div>
+                    <div class="col trackDuration">
+                        00:00:00
+                    </div>
+                </div>
+                <div class="m-1 current">
+                    <button type="button" class="btn btn-primary container-fluid" id="btn-0">
+                        Starten
+                    </button>
+                </div>
+            </div>
+
+            <div class="futureLeg" id="1">
+                <div>
+                    1. Etappe: Linz
+                </div>
+                <div class="past">
                     13:45 (fixiert)
                 </div>
-            </div>
-             <!-- <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>  -->
-
-            <div class="running">
-                <div class="row">
-                    <div class="col" id="datetime">
+                <div class="current row">
+                <div class="col currentTime">
                     </div>
-                    <div class="col">
-                        &nbsp;
+                    <div class="col trackDuration">
+                        00:00:00
                     </div>
                 </div>
-            </div>
-            <div class="m-1">
-                <button type="button" class="btn btn-primary container-fluid" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="start-past">
-                    Starten
-                </button>
+                <div class="m-1 current">
+                    <button type="button" class="btn btn-primary container-fluid" id="btn-1">
+                        Etappe
+                    </button>
+                </div>
             </div>
 
-            <div>
-                1. Etappe: Linz
-            </div>
-            <div class="past">
-                <div>
-                    13:45 (fixiert)
-                </div>
-            </div>
-            <div class="running">
-                <div class="row">
-                    <div class="col">
-                        13:45 (laufend)
-                    </div>
-                    <div class="col">
-                        00:00 (laufend)
-                    </div>
-                </div>
-            </div>
-            <div class="m-1">
-                <button type="button" class="btn btn-primary container-fluid">
-                    Starten
-                </button>
-            </div>
 
-            <div>
-                2. Etappe: St. P&ouml;lten
-            </div>
-            <div class="past">
-                <div>
-                    13:45 (fixiert)
-                </div>
-            </div>
-            <div class="running">
-                <div class="row">
-                    <div class="col">
-                        13:45 (laufend)
-                    </div>
-                    <div class="col">
-                        00:00 (laufend)
-                    </div>
-                </div>
-            </div>
-            <div class="m-1">
-                <button type="button" class="btn btn-primary container-fluid">
-                    Starten
-                </button>
-            </div>
-
-            <div>
-                Ankunft: Wien
-            </div>
-            <div class="past">
-                <div>
-                    13:45 (fixiert)
-                </div>
-            </div>
-            <div class="running">
-                <div class="row">
-                    <div class="col">
-                        13:45 (laufend)
-                    </div>
-                    <div class="col">
-                        00:00 (laufend)
-                    </div>
-                </div>
-            </div>
-            <div class="m-1">
-                <button type="button" class="btn btn-primary container-fluid">
-                    Starten
-                </button>
-            </div>
-
+ 
  
         </div>
 
@@ -226,11 +179,6 @@
     <!-- </div> -->
 
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
  
  
     <script type="text/javascript">
