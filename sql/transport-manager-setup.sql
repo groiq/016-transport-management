@@ -34,7 +34,7 @@ CREATE TABLE loads (
     target_location_id INT,
     start_time_estimate TIMESTAMP NULL DEFAULT NULL,
     start_time_actual TIMESTAMP NULL DEFAULT NULL,
-    target_time_estimate TIMESTAMP DEFAULT NULL,
+    target_time_estimate TIMESTAMP NULL DEFAULT NULL,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (truck_id)
         REFERENCES trucks (truck_id),
@@ -52,7 +52,7 @@ CREATE TABLE load_legs (
     number_in_sequence INT,
     start_time_estimate TIMESTAMP NULL DEFAULT NULL,
     start_time_actual TIMESTAMP NULL DEFAULT NULL,
-    target_time_estimate TIMESTAMP DEFAULT NULL,
+    target_time_estimate TIMESTAMP NULL DEFAULT NULL,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (load_id)
         REFERENCES loads (load_id),
