@@ -32,31 +32,8 @@
 
         <?php
 
-        // echo("<pre>");
-        // print_r($_POST);
-        // echo("</pre>");
-
-        // function for dropdown lists should be unnecessary on this page
-        // function offerOptions($optionList, $optionValue, $optionName)
-        // {
-        //     foreach ($optionList as $option) {
-        //         echo ("<option value='" . $option[$optionValue] . "'>" . $option[$optionName] . "</option>\n");
-        //     }
-        // }
-
         // connect to database 
 
-        // $con=mysqli_init(); mysqli_ssl_set($con, NULL, NULL, {ca-cert filename}, NULL, NULL); mysqli_real_connect($con, "tms-database.mariadb.database.azure.com", "tmsadmin@tms-database", {your_password}, {your_database}, 3306);
-        // $options = array(
-        // PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
-        // );
-        // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com;port=3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm', $options);
-        /*
-        $options = array(
-        PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
-        );
-        $db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
-        */
         // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
         $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
@@ -88,7 +65,6 @@
                 // later: leave the sequence count to the database!
                 $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $legs[0]));
                 for ($i = 0; $i < $lastLegIndex; $i++) {
-                    // $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
                     $addLegStatement->execute(array($newLoadId, $legs[$i], $legs[$i + 1]));
                 }
                 $addLegStatement->execute(array($newLoadId, $legs[$lastLegIndex], $_POST['targetLocation']));
@@ -102,25 +78,6 @@
         $queryLegsStatement = $pdo->prepare('select * from load_leg_data where load_id = ?');
         $queryLegsStatement->execute(array($newLoadId));
         $loadLegData = $queryLegsStatement->fetchAll(\PDO::FETCH_ASSOC);
-        // $locationQuerySql = "select location_id, name from locations;";
-        // $locationQuery = $pdo->query($locationQuerySql);
-        // $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
-
-        /*
-        SELECT 
-            number_in_sequence,
-            start_location_id,
-            start_location.name AS start_location_name,
-            target_location_id,
-            target_location.name AS target_location_name
-        FROM
-            locations start_location
-                JOIN
-            load_legs ON start_location.location_id = load_legs.start_location_id
-                JOIN
-            locations target_location ON load_legs.target_location_id = target_location.location_id
-            where load_id = 2;
-        */
 
         ?>
 
@@ -197,7 +154,8 @@
                     echo('</div>');
                 }
             ?>
-<!-- 
+
+            <!-- 
             <div class="futureLeg" id="1">
                 <div>
                     1. Etappe: Linz
@@ -219,10 +177,8 @@
                 </div>
             </div> -->
 
-
-
-
-            <div id="debug">
+            <!-- <div id="debug"> -->
+            <div id="debug" style="display: none">
                 <h2>Debug output</h2>
 
                 <?php
@@ -237,9 +193,6 @@
                 ?>
 
             </div>
-
- 
-        
  
         </div>
 
@@ -248,58 +201,6 @@
     </div>
 
     </div>
-
-    <!-- </div> -->
-
-    <!-- </div> -->
-
-    <!-- Optional JavaScript -->
- 
- 
-    <script type="text/javascript">
-
-        // var dt = new Date();
-        // document.getElementById("datetime").innerHTML = dt.toLocaleTimeString();
-
-        var currentTime = setInterval(currentDate, 1000);
-
-        function currentDate() {
-            var now = new Date();
-            document.getElementById("datetime").innerHTML = now.toLocaleTimeString();
-        }
- 
-        currentDate();
-    
-    // Set the date we're counting down to
-var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the result in the element with id="demo"
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  // If the count down is finished, write some text
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
-  }
-}, 1000);
-    
-    </script>
 
 </body>
 

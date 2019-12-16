@@ -34,18 +34,6 @@
 
 
                 // connect to database 
-
-                // $con=mysqli_init(); mysqli_ssl_set($con, NULL, NULL, {ca-cert filename}, NULL, NULL); mysqli_real_connect($con, "tms-database.mariadb.database.azure.com", "tmsadmin@tms-database", {your_password}, {your_database}, 3306);
-                // $options = array(
-                // PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
-                // );
-                // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com;port=3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm', $options);
-                /*
-                $options = array(
-                PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
-                );
-                $db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
-                */
                 // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
                 $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
@@ -124,44 +112,6 @@
                     </div>
 
                 </div>
-
-            </div>
-
-            <div id="debug" style="display: none">
-                <!-- Apply class .invisible to hide this div. -->
-
-                <h1>Debug data</h1>
-
-                <pre>
-                    <?php
-
-                    if (!empty($_POST["dbInsert"])) {
-                        print_r($_POST);
-                        echo ("\n\n");
-                        var_dump($_POST);
-                        echo ("\n\n");
-                        echo ($_POST["date"] . " " . $_POST["time"]);
-                        echo ("\n\n");
-                        $timestamp = strtotime($_POST["date"] . " " . $_POST["time"]);
-                        // echo($timestamp);
-                        $sqlTimestamp = date('y-m-d H:i:s', $timestamp);
-                        echo ($sqlTimestamp);
-                        // $t = strtotime('20130409163705');
-                        // echo date('d/m/y H:i:s', $t);
-                        // Format: YYYY-MM-DD hh:mm:ss.
-                    } else {
-                        echo ("no data");
-                    }
-
-                    echo ("\n\n");
-
-                    // print_r($locations);
-
-                    // var_dump($locations);
-
-                    ?>
-               </pre>
-
 
             </div>
 
