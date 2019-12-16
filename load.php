@@ -142,7 +142,7 @@
 
             <div class="currentLeg" id="0">
                 <div>
-                    Abfahrt: Salzburg
+                    Abfahrt: <?php echo($loadLegData[0]['start_location_name']) ?>
                 </div>
                 <div class="past">
                     13:45
