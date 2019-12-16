@@ -216,8 +216,8 @@
                 <?php
                     echo("<pre>");
 
-                    // print_r($_POST);
-                    // echo("\n\n");
+                    print_r($_POST);
+                    echo("\n\n");
 
                     print_r($loadLegData);
 
