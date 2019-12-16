@@ -90,129 +90,132 @@
             $addLegStatement = null;
         }
 
-
         // read data
-        $locationQuerySql = "select location_id, name from locations;";
-        $locationQuery = $pdo->query($locationQuerySql);
-        $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
-
-        $truckQuerySql = "select truck_id, license_plate from trucks;";
-        $truckQuery = $pdo->query($truckQuerySql);
-        $trucks = $truckQuery->fetchAll(\PDO::FETCH_ASSOC);
+        // $locationQuerySql = "select location_id, name from locations;";
+        // $locationQuery = $pdo->query($locationQuerySql);
+        // $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
 
         ?>
 
     </div>
 
-    <!-- <header>
-        <h1>
-            TMS
-        </h1>
-    </header> -->
     <div class="fixed-top container container-fluid bg-primary text-white">
-        <!-- <div class="container"> -->
-            <!-- <div class="maxwidth"> -->
             <h1>
                 <span class="align-middle">
                     TMS
                 </span>
-                <!-- TMS -->
             </h1>
-        <!-- </div> -->
     </div>
 
     <div class="container d-flex flex-column" id="main">
-        <!-- <div class="container"> -->
-
-       <!-- <div class="row"> -->
-        <!-- <h1 class="text-center align-self-center">TMS</h1> -->
-        <!-- </div> -->
-
-        <!-- <div class="row"> -->
-
-        <!-- <div class="card col-lg"> --> 
-        <div class="align-self-center maxwidth p-1" id="form">
-            <!-- <div> -->
-
+ 
+       <div class="align-self-center maxwidth p-1" id="form">
+    
             <h2 class="">Aktueller Transport</h2>
 
-
-            <!-- <p class="card-body"> -->
-            <div class="">
-
-                <form action="./index.php" method="post">
-                    <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
-
-                    <!-- <div class="form-group">
-
-                            <div class="row">
-
-                                <div class="col">
-                                    <label class="control-label" for="date">Datum</label>
-                                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
-                                </div>
-                                <div class="col">
-                                    <label for="time">Uhrzeit</label>
-                                    <input class="form-control" type="time" id="time" name="time">
-
-                                </div>
-
-                            </div> -->
-
-                    <div class="form-group">
-                        <label for="truck">Truck:</label>
-                        <select class="form-control" id="truck" name="truck">
-                            <?php
-                            offerOptions($trucks, "truck_id", "license_plate");
-                            ?>
-                        </select>
-                    </div>
-
-                    <!-- </div> -->
-
-                    <div class="form-group">
-                        <label for="startLocation">Von:</label>
-                        <select class="form-control" id="startLocation" name="startLocation">
-                            <?php
-                            offerOptions($locations, "location_id", "name");
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="targetLocation">Nach:</label>
-                        <select class="form-control" id="targetLocation" name="targetLocation">
-                            <?php
-                            offerOptions($locations, "location_id", "name");
-                            ?>
-                        </select>
-                    </div>
-
-                    <div id="dynamicInput">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="button" class="btn btn-block btn-primary" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
-                    </div>
-
-                    <!-- <div style="display: inline-block; text-align: right; width: 100%"> -->
-                    <!-- <input type="button" class="btn btn-light" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" /> -->
-                    <!-- </div> -->
-
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-primary">Transport erstellen</button>
-                        <!-- <input type="submit" value="Transport erstellen" /> -->
-                    </div>
-                </form>
-
+            <div>
+                Abfahrt: Salzburg
             </div>
-            <!-- </p> -->
+            <div class="past collapse" id="start-past">
+                <div>
+                    13:45 (fixiert)
+                </div>
+            </div>
+             <!-- <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>  -->
 
+            <div class="running">
+                <div class="row">
+                    <div class="col" id="datetime">
+                    </div>
+                    <div class="col">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="m-1">
+                <button type="button" class="btn btn-primary container-fluid" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="start-past">
+                    Starten
+                </button>
+            </div>
+
+            <div>
+                1. Etappe: Linz
+            </div>
+            <div class="past">
+                <div>
+                    13:45 (fixiert)
+                </div>
+            </div>
+            <div class="running">
+                <div class="row">
+                    <div class="col">
+                        13:45 (laufend)
+                    </div>
+                    <div class="col">
+                        00:00 (laufend)
+                    </div>
+                </div>
+            </div>
+            <div class="m-1">
+                <button type="button" class="btn btn-primary container-fluid">
+                    Starten
+                </button>
+            </div>
+
+            <div>
+                2. Etappe: St. P&ouml;lten
+            </div>
+            <div class="past">
+                <div>
+                    13:45 (fixiert)
+                </div>
+            </div>
+            <div class="running">
+                <div class="row">
+                    <div class="col">
+                        13:45 (laufend)
+                    </div>
+                    <div class="col">
+                        00:00 (laufend)
+                    </div>
+                </div>
+            </div>
+            <div class="m-1">
+                <button type="button" class="btn btn-primary container-fluid">
+                    Starten
+                </button>
+            </div>
+
+            <div>
+                Ankunft: Wien
+            </div>
+            <div class="past">
+                <div>
+                    13:45 (fixiert)
+                </div>
+            </div>
+            <div class="running">
+                <div class="row">
+                    <div class="col">
+                        13:45 (laufend)
+                    </div>
+                    <div class="col">
+                        00:00 (laufend)
+                    </div>
+                </div>
+            </div>
+            <div class="m-1">
+                <button type="button" class="btn btn-primary container-fluid">
+                    Starten
+                </button>
+            </div>
+
+ 
         </div>
 
     </div>
-   
  
     </div>
 
@@ -224,67 +227,54 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> -->
-
-    <!-- <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script> -->
-
-    <!-- var locations = <?php echo json_encode($locations); ?>; -->
-
+ 
+ 
     <script type="text/javascript">
 
-        var elemCounter = 0;
+        // var dt = new Date();
+        // document.getElementById("datetime").innerHTML = dt.toLocaleTimeString();
 
-        function addInput(divName) {
+        var curcentTime = setInterval(function() {
+            var now = new Date();
+            document.getElementById("datetime").innerHTML = now.toLocaleTimeString();
+        }, 1000);
 
-            var locations = <?php echo json_encode($locations); ?>;
-            elemCounter += 1;
+ 
 
-            var newDiv = document.createElement('div');
-            var formGroupAttr = document.createAttribute('class');
-            formGroupAttr.nodeValue = 'form-group';
-            newDiv.setAttributeNode(formGroupAttr);
+    
+    // Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
 
-            var labelDiv = document.createElement('label');
-            var labelAttr = document.createAttribute('for');
-            labelAttr.nodeValue = 'leg';
-            labelDiv.setAttributeNode(labelAttr);
-            labelDiv.innerHTML = elemCounter + '. Etappe:';
-            newDiv.appendChild(labelDiv);
+// Update the count down every 1 second
+var x = setInterval(function() {
 
-            var selectDiv = document.createElement('select');
-            var selectClassAttr = document.createAttribute('class');
-            selectClassAttr.nodeValue = 'form-control';
-            selectDiv.setAttributeNode(selectClassAttr);
-            var selectIdAttr = document.createAttribute('id');
-            selectIdAttr.nodeValue = 'leg';
-            selectDiv.setAttributeNode(selectIdAttr);
-            var selectNameAttr = document.createAttribute('name');
-            selectNameAttr.nodeValue = 'legs[]';
-            selectDiv.setAttributeNode(selectNameAttr);
-            newDiv.appendChild(selectDiv);
+  // Get today's date and time
+  var now = new Date().getTime();
 
-            for (i = 0; i < locations.length; i = i + 1) {
-                var newOption = document.createElement('option');
-                var optionValueAttr = document.createAttribute('value');
-                optionValueAttr.nodeValue = locations[i]['location_id'];
-                newOption.setAttributeNode(optionValueAttr);
-                newOption.innerHTML = locations[i]['name'];
-                selectDiv.appendChild(newOption);
-            }
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
 
-            document.getElementById(divName).appendChild(newDiv);
-        }
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+  // Display the result in the element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+    
     </script>
 
 </body>
