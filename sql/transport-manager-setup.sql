@@ -195,4 +195,4 @@ CREATE VIEW load_leg_data AS
             JOIN
         load_legs ON start_location.location_id = load_legs.start_location_id
             JOIN
-        locations target_location ON load_legs.target_location_id = target_location.location_id);
+        locations target_location ON load_legs.target_location_id = target_location.location_id) ORDER BY number_in_sequence;
