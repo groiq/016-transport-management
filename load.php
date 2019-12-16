@@ -49,8 +49,8 @@
         );
         $db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
         */
-        // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
-        $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+        $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
+        // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
         // write to database if there's something in the form
         if (!empty($_POST["dbInsert"])) {
@@ -238,13 +238,14 @@
         // var dt = new Date();
         // document.getElementById("datetime").innerHTML = dt.toLocaleTimeString();
 
-        var curcentTime = setInterval(function() {
+        var currentTime = setInterval(currentDate, 1000);
+
+        function currentDate() {
             var now = new Date();
             document.getElementById("datetime").innerHTML = now.toLocaleTimeString();
-        }, 1000);
-
+        }
  
-
+        currentDate();
     
     // Set the date we're counting down to
 var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
