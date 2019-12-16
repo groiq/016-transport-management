@@ -57,8 +57,8 @@
         );
         $db = new PDO('mysql:host=mydemoserver.mysql.database.azure.com;port=3306;dbname=databasename', 'username@mydemoserver', 'yourpassword', $options);
         */
-        // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
-        $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+        $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
+        // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
         // write to database if there's something in the form
         if (!empty($_POST["dbInsert"])) {
@@ -159,13 +159,20 @@
                         Starten
                     </button>
                 </div>
+                <hr />
             </div>
 
             <?php
                 foreach ($loadLegData as $leg) {
-                    echo('<div class="futureLeg" id="'.$leg['number_in_sequence'].'">');
+                    $sequenceNumber = $leg['number_in_sequence'];
+                    echo('<div class="futureLeg" id="'.$sequenceNumber . '">');
                         echo('<div>');
-                            echo($leg['number_in_sequence'].'. Etappe: ' . $leg['target_location_name']);
+                            if ($sequenceNumber != count($loadLegData)) {
+                                echo($sequenceNumber . '. ');
+                            } else {
+                                echo('Letzte ');
+                            }
+                            echo('Etappe: ' . $leg['target_location_name']);
                         echo('</div>');
                         echo('<div class="past">');
                             echo('(timestamp goes here)');
@@ -179,9 +186,14 @@
                         echo('</div>');
                         echo('<div class="m-1 current">');
                             echo('<button type="button" class="btn btn-primary container-fluid" id="btn-1">');
-                                echo('Etappe');
+                                if ($sequenceNumber == count($loadLegData)) {
+                                    echo('Ankunft');
+                                } else {
+                                    echo('Etappe');
+                                }
                             echo('</button>');
                         echo('</div>');
+                        echo('<hr />');
                     echo('</div>');
                 }
             ?>
