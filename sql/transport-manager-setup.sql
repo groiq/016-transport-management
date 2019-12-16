@@ -181,6 +181,19 @@ END$$
 
 DELIMITER ;
 
+USE `transport_management`;
+DROP procedure IF EXISTS `checkpoint`;
+
+DELIMITER $$
+USE `transport_management`$$
+CREATE PROCEDURE `checkpoint` (load_param int, location_param int, time_param timestamp)
+BEGIN
+	select (load_param, location_param, time_param);
+END$$
+
+DELIMITER ;
+
+
 drop view if exists full_load_data;
 CREATE VIEW load_leg_data AS
     (SELECT 

@@ -120,6 +120,8 @@ FROM
 call add_load(1,2,1);
 call add_leg(1,1,3);
 call add_leg(1,3,2);
+
+select * from load_legs;
     
 select * from load_leg_data;
 select * from load_leg_data where load_id = 2;
