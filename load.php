@@ -130,11 +130,11 @@
                     echo('<div class="futureLeg" id="'.$sequenceNumber . '">');
                         echo('<div>');
                             if ($sequenceNumber != count($loadLegData)) {
-                                echo($sequenceNumber . '. ');
+                                echo($sequenceNumber . '. Etappe');
                             } else {
-                                echo('Letzte ');
+                                echo('Ziel');
                             }
-                            echo('Etappe: ' . $leg['target_location_name']);
+                            echo(': ' . $leg['target_location_name']);
                         echo('</div>');
                         echo('<div class="past row">');
                             echo('<div class="past past-timestamp col">');
@@ -144,9 +144,6 @@
                                 echo('duration goes here');
                             echo('</div>');
                         echo('</div>');
-                        // echo('<div class="past past-timestamp">');
-                        //     echo('(timestamp goes here)');
-                        // echo('</div>');
                         echo('<div class="current row">');
                             echo('<div class="col currentTime">');
                             echo('</div>');
