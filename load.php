@@ -105,16 +105,16 @@
                     <div class="past past-timestamp col">
                         (timestamp goes here)
                     </div>
-                    <div class="past past-duration col">
+                    <!-- <div class="past past-duration col">
                         (duration goes here)
-                    </div>
+                    </div> -->
                 </div>
                 <div class="current row">
                     <div class="col currentTime">
                     </div>
-                    <div class="col trackDuration">
+                    <!-- <div class="col trackDuration">
                         00:00:00
-                    </div>
+                    </div> -->
                 </div>
                 <div class="m-1 current">
                     <button type="button" class="btn btn-primary container-fluid" id="btn-0">
