@@ -75,7 +75,7 @@
             // fetch id of new row
             $newLoadId = $pdo->lastInsertId();
 
-            $addLegStatement = $pdo->prepare("call add_leg(?,?,?,?);");
+            $addLegStatement = $pdo->prepare("call add_leg(?,?,?);");
 
             // If there are entries for legs, insert start location to first leg,
             // then go through legs, then insert last leg to target location.
@@ -86,22 +86,41 @@
                 $lastLegIndex = count($legs) - 1;
                 // insert legs; start counting at 0
                 // later: leave the sequence count to the database!
-                $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $legs[0], 0));
+                $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $legs[0]));
                 for ($i = 0; $i < $lastLegIndex; $i++) {
                     // $statement = $pdo->prepare("INSERT INTO load_legs (load_id, start_location_id, target_location_id, number_in_sequence) VALUES (?,?,?,?);");
-                    $addLegStatement->execute(array($newLoadId, $legs[$i], $legs[$i + 1], $i + 1));
+                    $addLegStatement->execute(array($newLoadId, $legs[$i], $legs[$i + 1]));
                 }
-                $addLegStatement->execute(array($newLoadId, $legs[$lastLegIndex], $_POST['targetLocation'], $lastLegIndex + 1));
+                $addLegStatement->execute(array($newLoadId, $legs[$lastLegIndex], $_POST['targetLocation']));
             } else {
-                $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $_POST['targetLocation'], 0));
+                $addLegStatement->execute(array($newLoadId, $_POST['startLocation'], $_POST['targetLocation']));
             }
             $addLegStatement = null;
         }
 
         // read data
+        $queryLegsStatement = $pdo->prepare('select * from load_leg_data where load_id = ?');
+        $queryLegsStatement->execute(array($newLoadId));
+        $loadLegData = $queryLegsStatement->fetchAll(\PDO::FETCH_ASSOC);
         // $locationQuerySql = "select location_id, name from locations;";
         // $locationQuery = $pdo->query($locationQuerySql);
         // $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
+
+        /*
+        SELECT 
+            number_in_sequence,
+            start_location_id,
+            start_location.name AS start_location_name,
+            target_location_id,
+            target_location.name AS target_location_name
+        FROM
+            locations start_location
+                JOIN
+            load_legs ON start_location.location_id = load_legs.start_location_id
+                JOIN
+            locations target_location ON load_legs.target_location_id = target_location.location_id
+            where load_id = 2;
+        */
 
         ?>
 
@@ -142,6 +161,31 @@
                 </div>
             </div>
 
+            <?php
+                foreach ($loadLegData as $leg) {
+                    echo('<div class="futureLeg" id="'.$leg['number_in_sequence'].'">');
+                        echo('<div>');
+                            echo($leg['number_in_sequence'].'. Etappe: ' . $leg['target_location_name']);
+                        echo('</div>');
+                        echo('<div class="past">');
+                            echo('(timestamp goes here)');
+                        echo('</div>');
+                        echo('<div class="current row">');
+                            echo('<div class="col currentTime">');
+                            echo('</div>');
+                            echo('<div class="col trackDuration">');
+                                echo('00:00:00');
+                            echo('</div>');
+                        echo('</div>');
+                        echo('<div class="m-1 current">');
+                            echo('<button type="button" class="btn btn-primary container-fluid" id="btn-1">');
+                                echo('Etappe');
+                            echo('</button>');
+                        echo('</div>');
+                    echo('</div>');
+                }
+            ?>
+<!-- 
             <div class="futureLeg" id="1">
                 <div>
                     1. Etappe: Linz
@@ -161,10 +205,29 @@
                         Etappe
                     </button>
                 </div>
+            </div> -->
+
+
+
+
+            <div id="debug">
+                <h2>Debug output</h2>
+
+                <?php
+                    echo("<pre>");
+
+                    // print_r($_POST);
+                    // echo("\n\n");
+
+                    print_r($loadLegData);
+
+                    echo("</pre>");
+                ?>
+
             </div>
 
-
  
+        
  
         </div>
 
