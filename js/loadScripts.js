@@ -15,27 +15,22 @@ $(document).ready(function(){
         var minutes = Math.floor(durationLeft / 60);
         durationLeft -= (minutes * 60);
         var seconds = durationLeft;
+        var result = hours.toString().padStart(2,'0') + ":" 
+            + minutes.toString().padStart(2,'0') + ":" 
+            + seconds.toString().padStart(2,'0');
+        // alert(result);
+        return result;
         // var hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         // var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
         // var seconds = Math.floor((duration % (1000 * 60)) / 1000);
-        $('.trackDuration').html(hours.toString().padStart(2,'0') + ":" + minutes.toString().padStart(2,'0') + ":" + seconds.toString().padStart(2,'0'));
+        // $('.trackDuration').html(hours.toString().padStart(2,'0') + ":" + minutes.toString().padStart(2,'0') + ":" + seconds.toString().padStart(2,'0'));
     }
     
     setInterval(function() {
         duration += 1;
-        writeDuration();
+        // writeDuration();
+        $('.trackDuration').html(writeDuration());
     }, 1000);
-    // setInterval(trackDuration, 1000);
-    // setInterval(trackDuration,1);
-
-    // var currentTime = setInterval(currentDate, 1000);
-
-    // function currentDate() {
-    //     var now = new Date();
-    //     document.getElementById("datetime").innerHTML = now.toLocaleTimeString();
-    // }
-
-    // currentDate();
 
     $('div.currentLeg .future').hide();
     $('div.currentLeg .past').hide();
@@ -60,12 +55,16 @@ $(document).ready(function(){
         $(newLegSelector).addClass('currentLeg');
 
         $(oldLegSelector + ' .current').hide();
-        $(oldLegSelector +  ' .past').show();
-
-        duration = 0;
-        writeDuration();
-
         $(newLegSelector + ' .future').hide();
+  
+        $(oldLegSelector + ' .past-duration').html(writeDuration());
+        duration = 0;
+        // alert(writeDuration);
+        $('.trackDuration').html(writeDuration());
+        var now = new Date();
+        $(oldLegSelector + ' .past-timestamp').html(now.toLocaleTimeString());
+
+        $(oldLegSelector +  ' .past').show();
         $(newLegSelector + ' .current').show();
 
         // duration = 0;

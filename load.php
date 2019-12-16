@@ -101,8 +101,13 @@
                 <div>
                     Abfahrt: <?php echo($loadLegData[0]['start_location_name']) ?>
                 </div>
-                <div class="past">
-                    13:45
+                <div class="past row">
+                    <div class="past past-timestamp col">
+                        (timestamp goes here)
+                    </div>
+                    <div class="past past-duration col">
+                        (duration goes here)
+                    </div>
                 </div>
                 <div class="current row">
                     <div class="col currentTime">
@@ -131,9 +136,17 @@
                             }
                             echo('Etappe: ' . $leg['target_location_name']);
                         echo('</div>');
-                        echo('<div class="past">');
-                            echo('(timestamp goes here)');
+                        echo('<div class="past row">');
+                            echo('<div class="past past-timestamp col">');
+                                echo('timestamp goes here');
+                            echo('</div>');
+                            echo('<div class="past past-duration col">');
+                                echo('duration goes here');
+                            echo('</div>');
                         echo('</div>');
+                        // echo('<div class="past past-timestamp">');
+                        //     echo('(timestamp goes here)');
+                        // echo('</div>');
                         echo('<div class="current row">');
                             echo('<div class="col currentTime">');
                             echo('</div>');
