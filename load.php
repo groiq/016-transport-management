@@ -165,27 +165,7 @@
                 }
             ?>
 
-            <!-- 
-            <div class="futureLeg" id="1">
-                <div>
-                    1. Etappe: Linz
-                </div>
-                <div class="past">
-                    13:45 (fixiert)
-                </div>
-                <div class="current row">
-                <div class="col currentTime">
-                    </div>
-                    <div class="col trackDuration">
-                        00:00:00
-                    </div>
-                </div>
-                <div class="m-1 current">
-                    <button type="button" class="btn btn-primary container-fluid" id="btn-1">
-                        Etappe
-                    </button>
-                </div>
-            </div> -->
+
 
             <!-- <div id="debug"> -->
             <div id="debug" style="display: none">
