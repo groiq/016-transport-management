@@ -186,8 +186,6 @@ END$$
 
 DELIMITER ;
 
-
-
 USE `transport_management`;
 DROP procedure IF EXISTS `add_leg`;
 
@@ -197,9 +195,9 @@ CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_loc
 BEGIN
 
 	declare number_in_sequence_next int default 0;
-    declare load_target_location_id int default 0;
+    -- declare load_target_location_id int default 0;
     declare avg_speed_local decimal(8,2);
-    declare distance_local decimal(8,2);
+    -- declare distance_local decimal(8,2);
     declare duration_estimate_calculated time;
     
     -- handle leg count
@@ -207,14 +205,7 @@ BEGIN
     if (number_in_sequence_next is null) then
 		set number_in_sequence_next = 1;
 	end if;
-	
-    -- calculate duration estimate
---     CALL GetOrderCountByStatus('Shipped',@total);
--- SELECT @total;
 	call distance(start_location_param, target_location_param, @distance);
-    -- set distance_local = select  @distance;
-   --  set distance_local = distance(start_location_param, target_location_param);
-    -- set distance_local = select  @distance;
     set avg_speed_local = (select avg_speed from trucks join loads using (truck_id) where loads.load_id = load_param);
     set duration_estimate_calculated = sec_to_time(floor((@distance / avg_speed_local) * 3600));
     
@@ -224,11 +215,13 @@ BEGIN
 		values 
 			(load_param, start_location_param, target_location_param, number_in_sequence_next, duration_estimate_calculated);
     
+    /*
     -- if leg target equals load target, then we are on the, uh, last leg. In this case calculate duration estimate for the whole journey. 
     set load_target_location_id = (select target_location_id from loads where load_id = load_param);
     if (target_location_param = load_target_location_id) then
 		update loads set duration_estimate = ( select sum(duration_estimate) from load_legs where load_id = load_param ) where load_id = load_param;
     end if;
+    */
     
 END$$
 
@@ -278,17 +271,41 @@ DELIMITER $$
 USE `transport_management`$$
 CREATE PROCEDURE `add_timestamp` (load_id_param int, leg_number_param int, timestamp_param timestamp)
 BEGIN
+
+	declare leg_counter int default 0;
+    declare leg_limit int default 0;
+    declare current_leg_estimated_timestamp timestamp default null;
+    -- declare next_timestamp_local timestamp default null;
+    -- declare current_duration_local time default null;
+    
 	-- if leg# is 0, then we are starting the first leg
 	if (leg_number_param = 0) then
 		update load_legs set start_time_estimate = timestamp_param, start_time_actual = timestamp_param where load_id = load_id_param and number_in_sequence = 1;
 	-- otherwise we finish the current leg and start the next one
 	else
 		update load_legs set target_time_actual = timestamp_param, duration_actual = timediff(timestamp_param, start_time_actual) where load_id = load_id_param and number_in_sequence = leg_number_param;
-        update load_legs set start_time_actual = timestamp_param where load_id = load_id_param and number_in_sequence = (leg_number_param + 1);
+UPDATE load_legs 
+SET 
+    start_time_actual = timestamp_param, start_time_estimate = timestamp_param
+WHERE
+    load_id = load_id_param
+        AND number_in_sequence = (leg_number_param + 1);
     end if;
-	-- recalculate ALL time estimates for legs from here on
+	-- recalculate all time estimates for legs from here on
+    set leg_counter = leg_number_param + 1;
+    set leg_limit = (select max(number_in_sequence) from load_legs where load_id = load_id_param);
+    set current_leg_estimated_timestamp = timestamp_param;
+    repeat
+		set current_leg_estimated_timestamp = timestamp(current_leg_estimated_timestamp,
+			(select duration_estimate from load_legs where load_id = load_id_param and number_in_sequence = leg_counter));
+            -- select current_leg_estimated_timestamp;
+		update load_legs set target_time_estimate = current_leg_estimated_timestamp where load_id = load_id_param and number_in_sequence = leg_counter;
+		set leg_counter = leg_counter + 1;
+        update load_legs set start_time_estimate = current_leg_estimated_timestamp where load_id = load_id_param and number_in_sequence = leg_counter;
+    until leg_counter > leg_limit end repeat;
+    
 END$$
 
 DELIMITER ;
 
-
+select * from load_legs order by load_id, number_in_sequence;
