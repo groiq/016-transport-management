@@ -83,6 +83,8 @@
 
     </div>
 
+    <span class="metadata" style="display: none" id="loadId" title=""><?php echo $newLoadId ?></span>
+
     <div class="fixed-top container container-fluid bg-primary text-white">
             <h1>
                 <span class="align-middle">
@@ -96,6 +98,8 @@
        <div class="align-self-center maxwidth p-1" id="form">
 
             <h2>Aktueller Transport</h2>
+
+            <!-- <span class="metadata" id="loadId"><?php echo json_encode($newLoadId) ?></span> -->
 
             <div class="currentLeg" id="0">
                 <div>
@@ -167,8 +171,8 @@
 
 
 
-            <!-- <div id="debug"> -->
-            <div id="debug" style="display: none">
+            <div id="debug">
+            <!-- <div id="debug" style="display: none"> -->
                 <h2>Debug output</h2>
 
                 <?php
@@ -191,6 +195,7 @@
     </div>
 
     </div>
+    
 
 </body>
 

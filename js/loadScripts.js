@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    
+    var loadId = Number(document.getElementById('loadId').innerHTML);
 
     function updateTime() {
         var now = new Date();
