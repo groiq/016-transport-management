@@ -14,6 +14,7 @@ $(document).ready(function(){
                 // alert(this.responseText);
                 var result = JSON.parse(this.responseText);
                 var output = result[1]['name'];
+                // $('#ajaxDbgOutput').html(result);
                 // alert(output);
                 // $('#tryAjax').html(output);
                 // alert(result[0]['name']);
@@ -59,7 +60,7 @@ $(document).ready(function(){
     $('div.currentLeg .past').hide();
     $('div.futureLeg .current').hide();
     $('div.futureLeg .past').hide();
-    $('div.futureLeg .future').show();
+    // $('div.futureLeg .future').show();
     $('div.currentLeg .current').show();
     
 
@@ -91,9 +92,10 @@ $(document).ready(function(){
 
         $(oldLegSelector +  ' .past').show();
         $(newLegSelector + ' .current').show();
-        if (oldLegId == '0') {
-            $('#totals .current').show();
-        }
+        $('div.futureLeg .future').show();
+        // if (oldLegId == '0') {
+        //     $('#totals .current').show();
+        // }
 
         // duration = 0;
 

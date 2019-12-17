@@ -100,7 +100,8 @@
             <h2>Aktueller Transport</h2>
 
             <!-- <span class="metadata" id="loadId"><?php echo json_encode($newLoadId) ?></span> -->
-
+            <hr />
+            
             <div class="currentLeg" id="0">
                 <div>
                     Abfahrt: <?php echo($loadLegData[0]['start_location_name']) ?>
@@ -158,12 +159,12 @@
                                 echo('00:00:00');
                             echo('</div>');
                         echo('</div>');
-                        echo('<div class="current-future row">');
-                            echo('<div class="col estTime">');
-                                echo('est time');
+                        echo('<div class="current future row" style="display: none">');
+                            echo('<div class="col">');
+                                echo('Ankunft voraussichtl.:');
                             echo('</div>');
                             echo('<div class="col estDuration">');
-                                echo('est duration');
+                                echo('(target_time_estimate)');
                             echo('</div>');
                         echo('</div>');
                         echo('<div class="m-1 current">');
@@ -180,7 +181,7 @@
                 }
             ?>
             
-            <div id="totals">
+            <!-- <div id="totals">
                 <div>
                     Gesamt
                 </div>
@@ -188,19 +189,13 @@
                     <div class="past past-timestamp col" style="display: none">
                         (timestamp goes here)
                     </div>
-                    <!-- <div class="past past-duration col">
-                        (duration goes here)
-                    </div> -->
                 </div>
                 <div class="current row" style="display: none">
                     <div class="est-timestamp col">
                         (erwartete Ankunft)
                     </div>
-                    <!-- <div class="est-duration col">
-                        (erwartete Dauer)
-                    </div> -->
                 </div>
-            </div>
+            </div> -->
 
 
 
@@ -208,6 +203,12 @@
             <div id="debug">
             <!-- <div id="debug" style="display: none"> -->
                 <h2>Debug output</h2>
+
+                <div id="ajaxDbgOutput">
+                    ajax debug output goes here
+                </div>
+
+                <hr />
 
                 <?php
                     echo("<pre>");
