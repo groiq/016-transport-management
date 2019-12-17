@@ -125,3 +125,20 @@ select * from load_legs;
     
 select * from load_leg_data;
 select * from load_leg_data where load_id = 2;
+
+-- insert into batches (spec_id,tundish_id,ladle_id,start_time,cast_finish_time) 
+-- values (1,1,1,'2019-05-05 09:00:00','2019-05-05 11:00:00');
+
+-- SELECT TIMESTAMPDIFF(SECOND, '2012-06-06 13:13:55', '2012-06-06 15:20:18')
+select * from load_legs;
+SELECT 
+    load_leg_id,
+    load_id,
+    number_in_sequence,
+    start_time_estimate,
+    target_time_estimate,
+    TIMESTAMPDIFF(MINUTE,
+        start_time_estimate,
+        target_time_estimate) AS duration
+FROM
+    load_legs;

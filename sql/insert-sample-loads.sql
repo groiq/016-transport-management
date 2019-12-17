@@ -17,4 +17,4 @@ insert into load_legs
 	(load_id, start_location_id, target_location_id, number_in_sequence) 
     values (2,6,8,3);
 
-
+update load_legs set target_time_estimate = '2019-12-13 09:30:00' where load_id = 1;
