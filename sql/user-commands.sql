@@ -1,6 +1,8 @@
 use transport_management;
 show tables;
 
+-- SET GLOBAL log_bin_trust_function_creators = 1;
+
 select * from locations;
 
 insert into locations (name,latitude,longitude) values ('equator',0,0);
@@ -137,12 +139,14 @@ call add_load(1,2,1);
 call add_leg(1,1,3);
 call add_leg(1,3,2);
 
+select * from load_legs order by load_id, number_in_sequence;
+
+select * from distances;
+
 call add_timestamp (2,0,'19-12-17 11:12:16');
 call add_timestamp (2,1,'19-12-17 11:12:17');
 call add_timestamp (2,2,'19-12-17 11:12:18');
 call add_timestamp (2,3,'19-12-17 11:12:19');
-
-select * from load_legs order by load_id, number_in_sequence;
 
 select * from loads order by load_id;
     

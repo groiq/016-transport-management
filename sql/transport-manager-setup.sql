@@ -167,23 +167,21 @@ END$$
 
 DELIMITER ;
 
+
 USE `transport_management`;
-DROP function IF EXISTS `distance`;
+DROP procedure IF EXISTS `distance`;
 
 DELIMITER $$
 USE `transport_management`$$
-CREATE FUNCTION `distance` (start_location_param int, target_location_param int)
-RETURNS decimal(8,2)
+CREATE PROCEDURE `distance` (in start_id_param int, target_id_param int, out distance_param decimal(8,2))
 BEGIN
-declare result decimal(8,2) default -1.0;
-if (start_location_param < target_location_param) then
-	set result = (select distance from distances where start_location_param = start_id and target_location_param = target_id);
-elseif (start_location_param > target_location_param) then
-	set result = (select distance from distances where start_location_param = target_id and target_location_param = start_id);
-else
-	set result = 0.0;
-end if;
-RETURN result;
+	if (start_id_param < target_id_param) then
+		select distance into distance_param from distances where start_id = start_id_param and target_id = target_id_param;
+	elseif (start_id_param > target_id_param) then
+		select distance into distance_param from distances where start_id = target_id_param and target_id = start_id_param;
+	else 
+		select 0.0 into distance_param;
+    end if;
 END$$
 
 DELIMITER ;
@@ -211,9 +209,14 @@ BEGIN
 	end if;
 	
     -- calculate duration estimate
-    set distance_local = distance(start_location_param, target_location_param);
+--     CALL GetOrderCountByStatus('Shipped',@total);
+-- SELECT @total;
+	call distance(start_location_param, target_location_param, @distance);
+    -- set distance_local = select  @distance;
+   --  set distance_local = distance(start_location_param, target_location_param);
+    -- set distance_local = select  @distance;
     set avg_speed_local = (select avg_speed from trucks join loads using (truck_id) where loads.load_id = load_param);
-    set duration_estimate_calculated = sec_to_time(floor((distance_local / avg_speed_local) * 3600));
+    set duration_estimate_calculated = sec_to_time(floor((@distance / avg_speed_local) * 3600));
     
     -- the actual insert
     insert into load_legs 
