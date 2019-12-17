@@ -32,10 +32,11 @@ CREATE TABLE loads (
     truck_id INT,
     start_location_id INT,
     target_location_id INT,
-    start_time_estimate TIMESTAMP NULL DEFAULT NULL,
-    start_time_actual TIMESTAMP NULL DEFAULT NULL,
+    start_time TIMESTAMP NULL DEFAULT NULL,
     target_time_estimate TIMESTAMP NULL DEFAULT NULL,
+    duration_estimate time,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
+    duration_actual time,
     FOREIGN KEY (truck_id)
         REFERENCES trucks (truck_id),
     FOREIGN KEY (start_location_id)
@@ -51,9 +52,11 @@ CREATE TABLE load_legs (
     target_location_id INT,
     number_in_sequence INT,
     start_time_estimate TIMESTAMP NULL DEFAULT NULL,
-    start_time_actual TIMESTAMP NULL DEFAULT NULL,
     target_time_estimate TIMESTAMP NULL DEFAULT NULL,
+    duration_estimate time,
+    start_time_actual TIMESTAMP NULL DEFAULT NULL,
     target_time_actual TIMESTAMP NULL DEFAULT NULL,
+    duration_actual time,
     FOREIGN KEY (load_id)
         REFERENCES loads (load_id),
     FOREIGN KEY (start_location_id)
@@ -74,7 +77,7 @@ insert into locations (name,latitude,longitude) values ('Graz',47.066667,15.4333
 insert into locations (name,latitude,longitude) values ('Wien',48.208333,16.373056);
 insert into locations (name,latitude,longitude) values ('Eisenstadt',47.845556,16.518889);
 
-insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',100.0,50.0,75.0);
+insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',100.0,50.0,50.0);
 
 insert into distances (start_id,target_id,distance) values (1,2,100);
 insert into distances (start_id,target_id,distance) values (1,3,100);
@@ -165,33 +168,83 @@ END$$
 DELIMITER ;
 
 USE `transport_management`;
+DROP function IF EXISTS `distance`;
+
+DELIMITER $$
+USE `transport_management`$$
+CREATE FUNCTION `distance` (start_location_param int, target_location_param int)
+RETURNS decimal(8,2)
+BEGIN
+declare result decimal(8,2) default -1.0;
+if (start_location_param < target_location_param) then
+	set result = (select distance from distances where start_location_param = start_id and target_location_param = target_id);
+elseif (start_location_param > target_location_param) then
+	set result = (select distance from distances where start_location_param = target_id and target_location_param = start_id);
+else
+	set result = 0.0;
+end if;
+RETURN result;
+END$$
+
+DELIMITER ;
+
+
+
+USE `transport_management`;
 DROP procedure IF EXISTS `add_leg`;
 
 DELIMITER $$
 USE `transport_management`$$
 CREATE PROCEDURE `add_leg` (load_param int, start_location_param int, target_location_param int)
 BEGIN
+
 	declare number_in_sequence_next int default 0;
+    declare load_target_location_id int default 0;
+    declare avg_speed_local decimal(8,2);
+    declare distance_local decimal(8,2);
+    declare duration_estimate_calculated time;
+    
+    -- handle leg count
     set number_in_sequence_next = ((select max(number_in_sequence) from load_legs where load_id = load_param)+1);
     if (number_in_sequence_next is null) then
 		set number_in_sequence_next = 1;
 	end if;
-	insert into load_legs (load_id, start_location_id, target_location_id, number_in_sequence) values (load_param, start_location_param, target_location_param, number_in_sequence_next);
+	
+    -- calculate duration estimate
+    set distance_local = distance(start_location_param, target_location_param);
+    set avg_speed_local = (select avg_speed from trucks join loads using (truck_id) where loads.load_id = load_param);
+    set duration_estimate_calculated = sec_to_time(floor((distance_local / avg_speed_local) * 3600));
+    
+    -- the actual insert
+    insert into load_legs 
+			(load_id, start_location_id, target_location_id, number_in_sequence, duration_estimate) 
+		values 
+			(load_param, start_location_param, target_location_param, number_in_sequence_next, duration_estimate_calculated);
+    
+    -- if leg target equals load target, then we are on the, uh, last leg. In this case calculate duration estimate for the whole journey. 
+    set load_target_location_id = (select target_location_id from loads where load_id = load_param);
+    if (target_location_param = load_target_location_id) then
+		update loads set duration_estimate = ( select sum(duration_estimate) from load_legs where load_id = load_param ) where load_id = load_param;
+    end if;
+    
 END$$
 
 DELIMITER ;
 
-USE `transport_management`;
-DROP procedure IF EXISTS `checkpoint`;
 
-DELIMITER $$
-USE `transport_management`$$
-CREATE PROCEDURE `checkpoint` (load_param int, location_param int, time_param timestamp)
-BEGIN
-	select (load_param, location_param, time_param);
-END$$
 
-DELIMITER ;
+
+-- USE `transport_management`;
+-- DROP procedure IF EXISTS `checkpoint`;
+
+-- DELIMITER $$
+-- USE `transport_management`$$
+-- CREATE PROCEDURE `checkpoint` (load_param int, location_param int, time_param timestamp)
+-- BEGIN
+-- 	select (load_param, location_param, time_param);
+-- END$$
+
+-- DELIMITER ;
 
 
 drop view if exists full_load_data;
@@ -209,3 +262,30 @@ CREATE VIEW load_leg_data AS
         load_legs ON start_location.location_id = load_legs.start_location_id
             JOIN
         locations target_location ON load_legs.target_location_id = target_location.location_id) ORDER BY number_in_sequence;
+
+/*
+$statement = $pdo->prepare("call insert_timestamp(?,?,?);");
+// $statement->execute(array($_GET['loadId'],$_GET['legId'],$_GET['timestamp']));
+*/
+
+USE `transport_management`;
+DROP procedure IF EXISTS `add_timestamp`;
+
+DELIMITER $$
+USE `transport_management`$$
+CREATE PROCEDURE `add_timestamp` (load_id_param int, leg_number_param int, timestamp_param timestamp)
+BEGIN
+	-- if leg# is 0, then we are starting the first leg
+	if (leg_number_param = 0) then
+		update load_legs set start_time_estimate = timestamp_param, start_time_actual = timestamp_param where load_id = load_id_param and number_in_sequence = 1;
+	-- otherwise we finish the current leg and start the next one
+	else
+		update load_legs set target_time_actual = timestamp_param, duration_actual = timediff(timestamp_param, start_time_actual) where load_id = load_id_param and number_in_sequence = leg_number_param;
+        update load_legs set start_time_actual = timestamp_param where load_id = load_id_param and number_in_sequence = (leg_number_param + 1);
+    end if;
+	-- recalculate ALL time estimates for legs from here on
+END$$
+
+DELIMITER ;
+
+

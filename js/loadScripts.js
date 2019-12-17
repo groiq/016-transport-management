@@ -2,14 +2,39 @@ $(document).ready(function(){
     
     var loadId = Number(document.getElementById('loadId').innerHTML);
 
+    function uploadTimestamp(legId) {
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                //document.getElementById("txtHint").innerHTML = this.responseText;
+                // alert(this.responseText);
+                var result = JSON.parse(this.responseText);
+                var output = result[1]['name'];
+                // alert(output);
+                // $('#tryAjax').html(output);
+                // alert(result[0]['name']);
+                // $('#tryAjax').html(result);
+
+            }
+        };
+        // var now = new Date();
+        // alert(now);
+        xmlhttp.open("GET","upload-timestamp.php?loadId="+loadId+"&legId="+legId,true);
+        xmlhttp.send();
+    }
+
     function updateTime() {
         var now = new Date();
         $('.currentTime').html(now.toLocaleTimeString());
     }
+    
     updateTime();
     setInterval(updateTime, 1000);
     
-    var duration = 0;
     function writeDuration(durationParam) {
         var durationLeft = durationParam;
         var hours = Math.floor(durationLeft / 3600);
@@ -23,6 +48,7 @@ $(document).ready(function(){
         return result;
     }
     
+    var duration = 0;
     setInterval(function() {
         duration += 1;
         // writeDuration();
@@ -33,6 +59,9 @@ $(document).ready(function(){
     $('div.currentLeg .past').hide();
     $('div.futureLeg .current').hide();
     $('div.futureLeg .past').hide();
+    $('div.futureLeg .future').show();
+    $('div.currentLeg .current').show();
+    
 
     $('button').click(function(){
 
@@ -42,6 +71,8 @@ $(document).ready(function(){
         var newLegId = (Number(oldLegId)+1).toString();
         var oldLegSelector = '#' + oldLegId;
         var newLegSelector = '#' + newLegId;
+
+        uploadTimestamp(oldLegId);
 
         $(oldLegSelector).removeClass('currentLeg');
         $(oldLegSelector).addClass('pastLeg');
@@ -60,6 +91,9 @@ $(document).ready(function(){
 
         $(oldLegSelector +  ' .past').show();
         $(newLegSelector + ' .current').show();
+        if (oldLegId == '0') {
+            $('#totals .current').show();
+        }
 
         // duration = 0;
 

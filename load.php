@@ -83,7 +83,7 @@
 
     </div>
 
-    <span class="metadata" style="display: none" id="loadId" title=""><?php echo $newLoadId ?></span>
+    <span class="metadata" style="display: none" id="loadId"><?php echo $newLoadId ?></span>
 
     <div class="fixed-top container container-fluid bg-primary text-white">
             <h1>
@@ -105,6 +105,9 @@
                 <div>
                     Abfahrt: <?php echo($loadLegData[0]['start_location_name']) ?>
                 </div>
+                <!-- <div id="tryAjax">
+                    no timestamp set
+                </div> -->
                 <div class="past row">
                     <div class="past past-timestamp col">
                         (timestamp goes here)
@@ -155,6 +158,14 @@
                                 echo('00:00:00');
                             echo('</div>');
                         echo('</div>');
+                        echo('<div class="current-future row">');
+                            echo('<div class="col estTime">');
+                                echo('est time');
+                            echo('</div>');
+                            echo('<div class="col estDuration">');
+                                echo('est duration');
+                            echo('</div>');
+                        echo('</div>');
                         echo('<div class="m-1 current">');
                             echo('<button type="button" class="btn btn-primary container-fluid" id="btn-1">');
                                 if ($sequenceNumber == count($loadLegData)) {
@@ -168,6 +179,29 @@
                     echo('</div>');
                 }
             ?>
+            
+            <div id="totals">
+                <div>
+                    Gesamt
+                </div>
+                <div class="past row">
+                    <div class="past past-timestamp col" style="display: none">
+                        (timestamp goes here)
+                    </div>
+                    <!-- <div class="past past-duration col">
+                        (duration goes here)
+                    </div> -->
+                </div>
+                <div class="current row" style="display: none">
+                    <div class="est-timestamp col">
+                        (erwartete Ankunft)
+                    </div>
+                    <!-- <div class="est-duration col">
+                        (erwartete Dauer)
+                    </div> -->
+                </div>
+            </div>
+
 
 
 
@@ -181,7 +215,7 @@
                     print_r($_POST);
                     echo("\n\n");
 
-                    print_r($loadLegData[0]);
+                    print_r($loadLegData);
 
                     echo("</pre>");
                 ?>

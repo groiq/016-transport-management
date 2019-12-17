@@ -117,11 +117,34 @@ FROM
         JOIN
     locations target_location ON load_legs.target_location_id = target_location.location_id;
 
+select * from trucks;
+select * from distances;
+select * from loads;
+select * from load_legs;
+select target_location_id from load_legs where load_id = 2 and number_in_sequence = 1;
+
+  --  set distance_local = (select distance from distances where start_id = start_location_param and target_id = target_location_param);
+--     set avg_speed_local = (select avg_speed from trucks join loads using (truck_id) where loads.load_id = load_param);
+--     -- set duration_estimate_calculated = ( distance / avg_speed ) * 3600;
+--     set duration_estimate_calculated = sec_to_time((distance / avg_speed) * 3600);
+--   
+select distance from distances where start_id = 1 and target_id = 2;
+select avg_speed from trucks join loads using (truck_id) where loads.load_id = 1;
+select sec_to_time((100.0 / 75.0 ) * 3600);
+
+update trucks set avg_speed = 50.0 where truck_id = 1;
 call add_load(1,2,1);
 call add_leg(1,1,3);
 call add_leg(1,3,2);
 
-select * from load_legs;
+call add_timestamp (2,0,'19-12-17 11:12:16');
+call add_timestamp (2,1,'19-12-17 11:12:17');
+call add_timestamp (2,2,'19-12-17 11:12:18');
+call add_timestamp (2,3,'19-12-17 11:12:19');
+
+select * from load_legs order by load_id, number_in_sequence;
+
+select * from loads order by load_id;
     
 select * from load_leg_data;
 select * from load_leg_data where load_id = 2;
