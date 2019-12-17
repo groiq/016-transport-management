@@ -283,10 +283,11 @@ BEGIN
 		update load_legs set start_time_estimate = timestamp_param, start_time_actual = timestamp_param where load_id = load_id_param and number_in_sequence = 1;
 	-- otherwise we finish the current leg and start the next one
 	else
-		update load_legs set target_time_actual = timestamp_param, duration_actual = timediff(timestamp_param, start_time_actual) where load_id = load_id_param and number_in_sequence = leg_number_param;
+		update load_legs set target_time_estimate = timestamp_param, target_time_actual = timestamp_param, duration_actual = timediff(timestamp_param, start_time_actual) where load_id = load_id_param and number_in_sequence = leg_number_param;
 UPDATE load_legs 
 SET 
-    start_time_actual = timestamp_param, start_time_estimate = timestamp_param
+    start_time_actual = timestamp_param,
+    start_time_estimate = timestamp_param
 WHERE
     load_id = load_id_param
         AND number_in_sequence = (leg_number_param + 1);
@@ -299,9 +300,19 @@ WHERE
 		set current_leg_estimated_timestamp = timestamp(current_leg_estimated_timestamp,
 			(select duration_estimate from load_legs where load_id = load_id_param and number_in_sequence = leg_counter));
             -- select current_leg_estimated_timestamp;
-		update load_legs set target_time_estimate = current_leg_estimated_timestamp where load_id = load_id_param and number_in_sequence = leg_counter;
+		UPDATE load_legs 
+SET 
+    target_time_estimate = current_leg_estimated_timestamp
+WHERE
+    load_id = load_id_param
+        AND number_in_sequence = leg_counter;
 		set leg_counter = leg_counter + 1;
-        update load_legs set start_time_estimate = current_leg_estimated_timestamp where load_id = load_id_param and number_in_sequence = leg_counter;
+UPDATE load_legs 
+SET 
+    start_time_estimate = current_leg_estimated_timestamp
+WHERE
+    load_id = load_id_param
+        AND number_in_sequence = leg_counter;
     until leg_counter > leg_limit end repeat;
     
 END$$

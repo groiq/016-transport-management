@@ -163,7 +163,7 @@
                             echo('<div class="col">');
                                 echo('Ankunft voraussichtl.:');
                             echo('</div>');
-                            echo('<div class="col estDuration">');
+                            echo('<div class="col target-time-estimate">');
                                 echo('(target_time_estimate)');
                             echo('</div>');
                         echo('</div>');
@@ -200,8 +200,8 @@
 
 
 
-            <div id="debug">
-            <!-- <div id="debug" style="display: none"> -->
+            <!-- <div id="debug"> -->
+            <div id="debug" style="display: none">
                 <h2>Debug output</h2>
 
                 <div id="ajaxDbgOutput">

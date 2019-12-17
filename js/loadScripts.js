@@ -2,6 +2,14 @@ $(document).ready(function(){
     
     var loadId = Number(document.getElementById('loadId').innerHTML);
 
+    // function writeTimestampEstimate(item) {
+    //     console.log(item);
+    //     var fieldSelector = '#' + item['number_in_sequence'] + ' .target-time-estimate';
+    //     console.log(fieldSelector);
+    //     $(fieldSelector).html(item['target_time_estimate']);
+        
+    // }
+
     function uploadTimestamp(legId) {
         if (window.XMLHttpRequest) {
             xmlhttp = new XMLHttpRequest();
@@ -13,8 +21,18 @@ $(document).ready(function(){
                 //document.getElementById("txtHint").innerHTML = this.responseText;
                 // alert(this.responseText);
                 var result = JSON.parse(this.responseText);
-                var output = result[1]['name'];
-                // $('#ajaxDbgOutput').html(result);
+                for (item in result) {
+                    // console.log(result[item]);
+                    var fieldSelector = '#' + result[item]['number_in_sequence'] + ' .target-time-estimate';
+                    var newValue = result[item]['target_time_estimate'];
+                    // console.log(newValue);
+                    $(fieldSelector).html(newValue.slice(11));
+                    // writeTimestampEstimate(item);
+                }
+                // result.foreach(writeTimestampEstimate);
+                var output = result;
+                // var output = result[1]['name'];
+                // console.log(JSON.stringify(output));
                 // alert(output);
                 // $('#tryAjax').html(output);
                 // alert(result[0]['name']);

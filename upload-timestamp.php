@@ -14,7 +14,7 @@ $statement->execute(array($_GET['loadId'],$_GET['legId'],$sqlTimestamp));
 
 // $testQueryString = "select target_location_id from load_legs where load_id = " . $_GET['loadId'] 
     // . "  and number_in_sequence = " . $_GET['legId'] . ";";
-$testQueryString = "select * from locations;";
+$testQueryString = 'select number_in_sequence, target_time_estimate from load_legs where load_id = '.$_GET['loadId'].';';
 $testQuery = $pdo->query($testQueryString);
 $result =  $testQuery->fetchAll(\PDO::FETCH_ASSOC);
 $resultEncoded = json_encode($result);
