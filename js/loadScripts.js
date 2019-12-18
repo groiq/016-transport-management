@@ -19,6 +19,7 @@ $(document).ready(function(){
         } else {
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
+        xmlhttp.timeout = 5000; // prevent timeout issues
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //document.getElementById("txtHint").innerHTML = this.responseText;
