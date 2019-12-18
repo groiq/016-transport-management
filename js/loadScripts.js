@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    $.ajaxSetup({ cache: false }); // or iPhones don't get fresh data
+    // $.ajaxSetup({ cache: false, timeout: 5000 }); // or iPhones don't get fresh data
+    
     
     var loadId = Number(document.getElementById('loadId').innerHTML);
 
@@ -45,7 +46,7 @@ $(document).ready(function(){
         };
         // var now = new Date();
         // alert(now);
-        xmlhttp.open("GET","upload-timestamp.php?loadId="+loadId+"&legId="+legId,true);
+        xmlhttp.open("GET","upload-timestamp.php?loadId="+loadId+"&legId="+legId+"&uniquetime="+(new Date().getTime()),true);
         xmlhttp.send();
     }
 
