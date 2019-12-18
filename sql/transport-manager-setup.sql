@@ -16,7 +16,11 @@ CREATE TABLE distances (
     distance_id INT PRIMARY KEY AUTO_INCREMENT,
     start_id INT,
     target_id INT,
-    distance DECIMAL(8 , 2 )
+    distance DECIMAL(8 , 2 ),
+    FOREIGN KEY (start_id)
+        REFERENCES locations (location_id),
+    FOREIGN KEY (target_id)
+        REFERENCES locations (location_id)
 );
 
 CREATE TABLE trucks (
