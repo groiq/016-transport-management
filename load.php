@@ -161,7 +161,7 @@
                         echo('</div>');
                         echo('<div class="current future row" style="display: none">');
                             echo('<div class="col">');
-                                echo('Ankunft voraussichtl.:');
+                                echo('Ankunft:');
                             echo('</div>');
                             echo('<div class="col target-time-estimate">');
                                 echo('(target_time_estimate)');
