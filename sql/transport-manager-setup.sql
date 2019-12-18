@@ -177,23 +177,6 @@ END$$
 
 DELIMITER ;
 
--- view for load legs with location names, for use by the php app
-drop view if exists load_leg_data;
-CREATE VIEW load_leg_data AS
-    (SELECT 
-        load_id,
-        number_in_sequence,
-        start_location_id,
-        start_location.name AS start_location_name,
-        target_location_id,
-        target_location.name AS target_location_name
-    FROM
-        locations start_location
-            JOIN
-        load_legs ON start_location.location_id = load_legs.start_location_id
-            JOIN
-        locations target_location ON load_legs.target_location_id = target_location.location_id) ORDER BY number_in_sequence;
-
 -- add a timestamp to a load leg
 USE `transport_management`;
 DROP procedure IF EXISTS `add_timestamp`;
@@ -270,6 +253,46 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- view for load legs with location names, for use by the php app
+drop view if exists load_leg_data;
+CREATE VIEW load_leg_data AS
+    (SELECT 
+        load_id,
+        number_in_sequence,
+        start_location_id,
+        start_location.name AS start_location_name,
+        target_location_id,
+        target_location.name AS target_location_name
+    FROM
+        locations start_location
+            JOIN
+        load_legs ON start_location.location_id = load_legs.start_location_id
+            JOIN
+        locations target_location ON load_legs.target_location_id = target_location.location_id) ORDER BY number_in_sequence;
+
+CREATE VIEW load_reports AS
+    (SELECT 
+        load_id,
+        license_plate,
+        start_loc.name as start_name,
+        target_loc.name as target_name,
+        total_distance,
+        start_time,
+        target_time_prior_estimate,
+        target_time_actual,
+        duration_prior_estimate,
+        duration_actual,
+        total_cost_prior_estimate,
+        total_cost_actual
+    FROM
+        loads
+            JOIN
+        locations start_loc ON start_loc.location_id = loads.start_location_id
+            JOIN
+        locations target_loc ON target_loc.location_id = loads.target_location_id
+            JOIN
+        trucks USING (truck_id));
 
 /* sample core data */
 /* ---------------- */
