@@ -150,7 +150,9 @@
                     <hr />
 
                    <div class="m-1 current">
-                       <a href="./index.php" class="btn btn-primary container-fluid">Zur&uuml;ck zur Startseite</a>
+                        <form action="./index.php" method="post">
+                            <button type="submit" class="btn btn-block btn-primary">Zur&uuml;ck zur Startseite</button>
+                        </form>
                     </div>
 
                     <!-- <div id="debug"> -->
