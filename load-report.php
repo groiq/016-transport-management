@@ -16,7 +16,6 @@
 
 <body>
 
-    <!-- <div id="bg-color-wrapper"> -->
     <div id="bg-img-wrapper">
         <div id="content-wrapper">
 
@@ -29,13 +28,11 @@
                 // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
                 // read data
-                $locationQuerySql = "select location_id, name from locations;";
-                $locationQuery = $pdo->query($locationQuerySql);
-                $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
-
-                $truckQuerySql = "select truck_id, license_plate from trucks;";
-                $truckQuery = $pdo->query($truckQuerySql);
-                $trucks = $truckQuery->fetchAll(\PDO::FETCH_ASSOC);
+                $reportQuerySql = 'select * from load_reports where load_id = ' 
+                                    . $_GET['loadId'] . ';';
+                $reportQuery = $pdo->query($reportQuerySql);
+                $reports = $reportQuery->fetchAll(\PDO::FETCH_ASSOC);
+                $report = $reports[0];
 
                 ?>
 
@@ -53,54 +50,127 @@
 
                 <div class="align-self-center maxwidth p-1" id="form">
  
-                    <h2>Neuer Transport</h2>
+                    <h2>Transport Bericht</h2>
 
-                    <div class="">
+                    <div class="row">
+                        <div class="col">
+                            Dauer erwartet: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['duration_prior_estimate']; ?> h
+                        </div>
+                    </div>
 
-                        <form action="./load.php" method="post">
-                            <input type="hidden" id="dbInsert" name="dbInsert" value="insertLoad">
+                    <div class="row">
+                        <div class="col">
+                            Kosten erwartet: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['total_cost_prior_estimate']; ?> &euro;
+                        </div>
+                    </div>
 
-                            <div class="form-group">
-                                <label for="truck">Truck:</label>
-                                <select class="form-control" id="truck" name="truck">
-                                    <?php
-                                    offerOptions($trucks, "truck_id", "license_plate");
-                                    ?>
-                                </select>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            Dauer tats&auml;chlich: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['duration_actual']; ?> h
+                        </div>
+                    </div>
 
-                            <div class="form-group">
-                                <label for="startLocation">Von:</label>
-                                <select class="form-control" id="startLocation" name="startLocation">
-                                    <?php
-                                    offerOptions($locations, "location_id", "name");
-                                    ?>
-                                </select>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            Kosten tats&auml;chlich: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['total_cost_actual']; ?> &euro;
+                        </div>
+                    </div>
 
-                            <div class="form-group">
-                                <label for="targetLocation">Nach:</label>
-                                <select class="form-control" id="targetLocation" name="targetLocation">
-                                    <?php
-                                    offerOptions($locations, "location_id", "name");
-                                    ?>
-                                </select>
-                            </div>
 
-                            <div id="dynamicInput">
-                            </div>
+                    <hr />
 
-                            <div class="form-group">
-                                <input type="button" class="btn btn-block btn-primary" value="Etappe hinzuf&uuml;gen" onclick="addInput('dynamicInput');" />
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            Von: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['start_name']; ?>
+                        </div>
+                    </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-primary">Transport erstellen</button>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            Nach: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['target_name']; ?>
+                        </div>
+                    </div>
 
-                        </form>
+                    <div class="row">
+                        <div class="col">
+                            Strecke: 
+                        </div>
+                        <div class="col">
+                            <?php echo $report['total_distance']; ?> km
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Abfahrt: 
+                        </div>
+                        <div class="col">
+                            <?php echo substr($report['start_time'], 11); ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Ankunft erwartet: 
+                        </div>
+                        <div class="col">
+                            <?php echo substr($report['target_time_prior_estimate'], 11); ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Ankunft tats&auml;chlich: 
+                        </div>
+                        <div class="col">
+                            <?php echo substr($report['target_time_actual'], 11); ?>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                   <div class="m-1 current">
+                       <a href="./index.php" class="btn btn-primary container-fluid">Zur&uuml;ck zur Startseite</a>
+                    </div>
+
+                    <!-- <div id="debug"> -->
+                    <div id="debug" style="display: none">
+                        <h2>Debug output</h2>
+
+
+                        <?php
+                            echo("<pre>");
+                            echo $report['duration_prior_estimate'];
+                            print_r($report['duration_prior_estimate']);
+
+                            print_r($report);
+                            echo("\n\n");
+
+     
+                            echo("</pre>");
+                        ?>
 
                     </div>
+        
+ 
 
                 </div>
 
