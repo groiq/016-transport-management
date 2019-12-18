@@ -1,5 +1,54 @@
+
+/* Doodles and sample queries designed to be executed line by line as needed. */
+/* -------------------------------------------------------------------------- */
+
 use transport_management;
 show tables;
+
+/* Handle loads + load legs */
+/* ------------------------ */
+
+-- insert load #1 and #2 if needed
+insert into loads (truck_id, start_location_id, target_location_id) values (1,3,8); 
+insert into loads (truck_id, start_location_id, target_location_id) values (1,3,8); 
+
+-- delete legs from load #1 if needed
+delete from load_legs where load_id = 2;
+
+select * from loads;
+
+-- add legs
+call add_leg(1,3,4);
+call add_leg(1,4,6);
+call add_leg(1,6,8);
+
+select * from loads;
+
+-- add timestamps and keep tracking
+select * from load_legs order by load_id, number_in_sequence;
+call add_timestamp (1,0,'19-12-17 08:00:00');
+select * from load_legs order by load_id, number_in_sequence;
+call add_timestamp (1,1,'19-12-17 09:00:00');
+select * from load_legs order by load_id, number_in_sequence;
+call add_timestamp (1,2,'19-12-17 10:00:00');
+select * from load_legs order by load_id, number_in_sequence;
+call add_timestamp (1,3,'19-12-17 11:00:00');
+select * from load_legs order by load_id, number_in_sequence;
+
+select * from loads;
+
+select * from load_legs where load_id = 3 order by number_in_sequence;
+
+
+/* from here on it's pretty much legacy */
+/* ------------------------------------ */
+
+-- select max(number_in_sequence) from load_legs where load_id = 2;
+select * from distances;
+
+
+select * from loads order by load_id;
+    
 
 -- SET GLOBAL log_bin_trust_function_creators = 1;
 
