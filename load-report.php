@@ -52,6 +52,8 @@
  
                     <h2>Transport Bericht</h2>
 
+                    <hr />
+
                     <div class="row">
                         <div class="col">
                             Dauer erwartet: 
@@ -63,19 +65,19 @@
 
                     <div class="row">
                         <div class="col">
-                            Kosten erwartet: 
+                            Dauer tats&auml;chlich: 
                         </div>
                         <div class="col">
-                            <?php echo $report['total_cost_prior_estimate']; ?> &euro;
+                            <?php echo $report['duration_actual']; ?> h
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col">
-                            Dauer tats&auml;chlich: 
+                            Kosten erwartet: 
                         </div>
                         <div class="col">
-                            <?php echo $report['duration_actual']; ?> h
+                            <?php echo $report['total_cost_prior_estimate']; ?> &euro;
                         </div>
                     </div>
 
