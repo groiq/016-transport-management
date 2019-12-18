@@ -24,13 +24,14 @@ $(document).ready(function(){
                 for (item in result) {
                     // console.log(result[item]);
                     var fieldSelector = '#' + result[item]['number_in_sequence'] + ' .target-time-estimate';
-                    var newValue = result[item]['target_time_estimate'];
+                    // alert(result[item]['target_time']);
+                    var newValue = result[item]['target_time'];
                     // console.log(newValue);
                     $(fieldSelector).html(newValue.slice(11));
                     // writeTimestampEstimate(item);
                 }
                 // result.foreach(writeTimestampEstimate);
-                var output = result;
+                // var output = result;
                 // var output = result[1]['name'];
                 // console.log(JSON.stringify(output));
                 // alert(output);
