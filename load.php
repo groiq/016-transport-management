@@ -177,6 +177,16 @@
                             echo('</button>');
                         echo('</div>');
                         echo('<hr />');
+                        if ($sequenceNumber == count($loadLegData)) {
+                            echo('<div class="m-1 past">');
+                            echo('<a href="./load-report.php?loadId='.$newLoadId.'" class="btn btn-primary container-fluid">');
+                                echo('Report ansehen');
+                            echo('</a>');
+                            // echo('<button type="button" class="btn btn-primary container-fluid" id="btn-1">');
+                                // echo('Zusammen')
+                            // echo('</button>');
+                            echo('</div>');
+                        }
                     echo('</div>');
                 }
             ?>
