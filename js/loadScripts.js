@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+    $.ajaxSetup({ cache: false }); // or iPhones don't get fresh data
     
     var loadId = Number(document.getElementById('loadId').innerHTML);
 
