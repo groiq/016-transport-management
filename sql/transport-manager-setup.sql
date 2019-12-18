@@ -54,39 +54,22 @@ CREATE TABLE load_legs (
     start_location_id INT,
     target_location_id INT,
     number_in_sequence INT,
-    -- start_time_estimate TIMESTAMP NULL DEFAULT NULL,
-    -- target_time_estimate TIMESTAMP NULL DEFAULT NULL,
+    distance DECIMAL(8 , 2 ),
     start_time TIMESTAMP NULL DEFAULT NULL,
     duration_estimate TIME,
     duration_actual TIME,
     target_time TIMESTAMP NULL DEFAULT NULL,
-    -- start_time_actual TIMESTAMP NULL DEFAULT NULL,
-    -- target_time_actual TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (load_id)
         REFERENCES loads (load_id),
     FOREIGN KEY (start_location_id)
         REFERENCES locations (location_id),
     FOREIGN KEY (target_location_id)
-        REFERENCES locations (location_id)
+        REFERENCES locations (location_id),
+    UNIQUE (load_id , number_in_sequence)
 );
 
 /* stored procedures */
 /* ----------------- */
-
-/*
-USE `transport_management`;
-DROP procedure IF EXISTS `add_load`;
-
-DELIMITER $$
-USE `transport_management`$$
-CREATE PROCEDURE `add_load` (start_location_param int, target_location_param int, truck_param int)
-BEGIN
-	-- $statement = $pdo->prepare("INSERT INTO loads (start_location_id,target_location_id,truck_id) VALUES (?,?,?);");
-	insert into loads (start_location_id,target_location_id,truck_id) values (start_location_param,target_location_param,truck_param);
-END$$
-
-DELIMITER ;
-*/
 
 -- distances are saved unidirectionally, this procedure makes them bidirectional.
 USE `transport_management`;
@@ -107,6 +90,7 @@ END$$
 
 DELIMITER ;
 
+-- helper procedure to calculate total costs of a load
 USE `transport_management`;
 DROP procedure IF EXISTS `calculate_costs`;
 
@@ -134,6 +118,7 @@ BEGIN
     set @fixed_cost = (select fixed_cost_per_hour from loads join trucks using (truck_id) where load_id = load_id_param);
     set @cost_per_km = (select cost_per_km from loads join trucks using (truck_id) where load_id = load_id_param);
     set @result = ( (@total_distance * @cost_per_km) + (@fixed_cost * @duration_as_decimal));
+    -- select @total_distance;
     if (@modifier = 'prior_estimate') then
 		update loads set total_cost_prior_estimate = @result where load_id = @load_id;
 	else
@@ -176,13 +161,14 @@ BEGIN
     
     -- the actual insert
     insert into load_legs 
-			(load_id, start_location_id, target_location_id, number_in_sequence, duration_estimate) 
+			(load_id, start_location_id, target_location_id, number_in_sequence, distance, duration_estimate) 
 		values 
-			(load_param, start_location_param, target_location_param, number_in_sequence_next, duration_estimate_calculated);
+			(load_param, start_location_param, target_location_param, number_in_sequence_next, @distance, duration_estimate_calculated);
     
-    -- if leg target equals load target, then we are on the, uh, last leg. In this case calculate duration + cost estimate for the whole load. 
+    -- if leg target equals load target, then we are on the, uh, last leg. In this case calculate total distance duration + cost estimate for the whole load. 
     set load_target_location_id = (select target_location_id from loads where load_id = load_param);
     if (target_location_param = load_target_location_id) then
+		update loads set total_distance = ( select sum(distance) from load_legs where load_id = load_param ) where load_id = load_param;
 		update loads set duration_prior_estimate = ( select sum(duration_estimate) from load_legs where load_id = load_param ) where load_id = load_param;
         call calculate_costs(load_param, 'prior_estimate');
     end if;
@@ -191,22 +177,7 @@ END$$
 
 DELIMITER ;
 
-
-
-
--- USE `transport_management`;
--- DROP procedure IF EXISTS `checkpoint`;
-
--- DELIMITER $$
--- USE `transport_management`$$
--- CREATE PROCEDURE `checkpoint` (load_param int, location_param int, time_param timestamp)
--- BEGIN
--- 	select (load_param, location_param, time_param);
--- END$$
-
--- DELIMITER ;
-
-
+-- view for load legs with location names, for use by the php app
 drop view if exists load_leg_data;
 CREATE VIEW load_leg_data AS
     (SELECT 
@@ -223,6 +194,7 @@ CREATE VIEW load_leg_data AS
             JOIN
         locations target_location ON load_legs.target_location_id = target_location.location_id) ORDER BY number_in_sequence;
 
+-- add a timestamp to a load leg
 USE `transport_management`;
 DROP procedure IF EXISTS `add_timestamp`;
 
@@ -240,6 +212,7 @@ BEGIN
 	-- if leg# is 0, then we are starting the first leg
 	if (leg_number_param = 0) then
 		update load_legs set start_time = timestamp_param where load_id = load_id_param and number_in_sequence = 1;
+        update loads set start_time = timestamp_param where load_id = load_id_param;
 	-- otherwise we finish the current leg and start the next one
 	else
 		update load_legs set target_time = timestamp_param, duration_actual = timediff(timestamp_param, start_time) where load_id = load_id_param and number_in_sequence = leg_number_param;
@@ -251,28 +224,48 @@ BEGIN
 				AND number_in_sequence = (leg_number_param + 1);
     end if;
     
-	-- recalculate all time estimates for legs from here on
-    set leg_counter = leg_number_param + 1;
-    set leg_limit = (select max(number_in_sequence) from load_legs where load_id = load_id_param);
-    set current_leg_estimated_timestamp = timestamp_param;
-    repeat
-		set current_leg_estimated_timestamp = timestamp(current_leg_estimated_timestamp,
-			(select duration_estimate from load_legs where load_id = load_id_param and number_in_sequence = leg_counter));
-            -- select current_leg_estimated_timestamp;
-		UPDATE load_legs 
-		SET 
-			target_time = current_leg_estimated_timestamp
-		WHERE
-			load_id = load_id_param
-				AND number_in_sequence = leg_counter;
-				set leg_counter = leg_counter + 1;
-		UPDATE load_legs 
-		SET 
-			start_time = current_leg_estimated_timestamp
-		WHERE
-			load_id = load_id_param
-				AND number_in_sequence = leg_counter;
-    until leg_counter > leg_limit end repeat;
+    -- if target location is load target location, we've finished the tour,
+    -- so calculate total cost + duration
+    if (select target_location_id from load_legs where number_in_sequence = leg_number_param) = (select target_location_id from loads where load_id = load_id_param) then
+    
+		-- write target time to loads table
+        update loads set target_time_actual = timestamp_param where load_id = load_id_param;
+	    -- calculate total duration
+        update loads set duration_actual = timediff(timestamp_param,(select start_time from load_legs where load_id = load_id_param and number_in_sequence = 1)) where load_id = load_id_param;
+        -- calculate total cost
+        call calculate_costs(load_id_param, 'actual');
+        
+	-- otherwise recalculate time estimates for all legs from here on
+    else
+    
+		set leg_counter = leg_number_param + 1;
+		set leg_limit = (select max(number_in_sequence) from load_legs where load_id = load_id_param);
+		set current_leg_estimated_timestamp = timestamp_param;
+		repeat
+			set current_leg_estimated_timestamp = timestamp(current_leg_estimated_timestamp,
+				(select duration_estimate from load_legs where load_id = load_id_param and number_in_sequence = leg_counter));
+				-- select current_leg_estimated_timestamp;
+			UPDATE load_legs 
+			SET 
+				target_time = current_leg_estimated_timestamp
+			WHERE
+				load_id = load_id_param
+					AND number_in_sequence = leg_counter;
+					set leg_counter = leg_counter + 1;
+			UPDATE load_legs 
+			SET 
+				start_time = current_leg_estimated_timestamp
+			WHERE
+				load_id = load_id_param
+					AND number_in_sequence = leg_counter;
+		until leg_counter > leg_limit end repeat;
+        
+        -- if we're on start of tour, write target time prior estimate to loads table
+        if (leg_number_param = 0) then
+			update loads set target_time_prior_estimate = current_leg_estimated_timestamp where load_id = load_id_param;
+        end if;
+
+    end if;
     
 END$$
 
@@ -291,7 +284,7 @@ insert into locations (name,latitude,longitude) values ('Graz',47.066667,15.4333
 insert into locations (name,latitude,longitude) values ('Wien',48.208333,16.373056);
 insert into locations (name,latitude,longitude) values ('Eisenstadt',47.845556,16.518889);
 
-insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',50.0,50.0,50.0);
+insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('LL-1234G',50.0,5.0,50.0);
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('W-56785G',50.0,50.0,50.0);
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('VL-3454G',50.0,50.0,50.0);
 
