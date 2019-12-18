@@ -179,9 +179,14 @@
                         echo('<hr />');
                         if ($sequenceNumber == count($loadLegData)) {
                             echo('<div class="m-1 past">');
-                            echo('<a href="./load-report.php?loadId='.$newLoadId.'" class="btn btn-primary container-fluid">');
-                                echo('Report ansehen');
-                            echo('</a>');
+                                echo('<form action="./load-report.php" method="get">');
+                                    echo('<input type="hidden" id="loadId" name="loadId" value="'.$newLoadId.'">');
+                                    echo('<button type="submit" class="btn btn-block btn-primary">Report ansehen</button>');
+                                echo('</form>');
+                            // echo('<a href="./load-report.php?loadId='.$newLoadId.'" class="btn btn-primary container-fluid">');
+                                // echo('Report ansehen');
+                            // echo('</a>');
+                            // <button type="submit" class="btn btn-block btn-primary">Transport erstellen</button>
                             // echo('<button type="button" class="btn btn-primary container-fluid" id="btn-1">');
                                 // echo('Zusammen')
                             // echo('</button>');
@@ -190,6 +195,8 @@
                     echo('</div>');
                 }
             ?>
+
+
             
             <!-- <div id="totals">
                 <div>
