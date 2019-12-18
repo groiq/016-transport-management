@@ -37,8 +37,29 @@ select * from load_legs order by load_id, number_in_sequence;
 
 select * from loads;
 
+select * from load_reports;
+
 select * from load_legs where load_id = 3 order by number_in_sequence;
 
+/*---------------------------------*/
+
+insert into loads (truck_id, start_location_id, target_location_id) values (1,8,9); 
+set @curload = 4;
+select @curload;
+
+call add_leg(@curload,8,9);
+
+call add_timestamp (@curload,0,'2019-12-18 16:17:30');
+call add_timestamp (@curload,1,'2019-12-18 16:17:32');
+
+select * from loads;
+select * from loads where load_id = @curload;
+select * from load_legs order by load_id, number_in_sequence;
+select * from load_legs where load_id = @curload order by number_in_sequence;
+select * from load_reports;
+
+/*-------------*/
+select current_timestamp;
 
 /* from here on it's pretty much legacy */
 /* ------------------------------------ */

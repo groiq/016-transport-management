@@ -213,9 +213,10 @@ BEGIN
     
     -- if target location is load target location, we've finished the tour,
     -- so calculate total cost + duration
-    if (select target_location_id from load_legs where number_in_sequence = leg_number_param) = (select target_location_id from loads where load_id = load_id_param) then
+    if (select target_location_id from load_legs where number_in_sequence = leg_number_param and load_id = load_id_param) = (select target_location_id from loads where load_id = load_id_param) then
     
 		-- write target time to loads table
+        -- select timestamp_param;
         update loads set target_time_actual = timestamp_param where load_id = load_id_param;
 	    -- calculate total duration
         update loads set duration_actual = timediff(timestamp_param,(select start_time from load_legs where load_id = load_id_param and number_in_sequence = 1)) where load_id = load_id_param;
