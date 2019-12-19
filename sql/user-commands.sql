@@ -5,6 +5,7 @@
 use transport_management;
 show tables;
 
+
 /* Handle loads + load legs */
 /* ------------------------ */
 

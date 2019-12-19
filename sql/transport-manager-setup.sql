@@ -159,6 +159,8 @@ BEGIN
     if (number_in_sequence_next is null) then
 		set number_in_sequence_next = 1;
 	end if;
+    
+    -- calculate duration estimate
 	call distance(start_location_param, target_location_param, @distance);
     set avg_speed_local = (select avg_speed from trucks join loads using (truck_id) where loads.load_id = load_param);
     set duration_estimate_calculated = sec_to_time(floor((@distance / avg_speed_local) * 3600));
@@ -193,8 +195,6 @@ BEGIN
 	declare leg_counter int default 0;
     declare leg_limit int default 0;
     declare current_leg_estimated_timestamp timestamp default null;
-    -- declare next_timestamp_local timestamp default null;
-    -- declare current_duration_local time default null;
     
 	-- if leg# is 0, then we are starting the first leg
 	if (leg_number_param = 0) then
@@ -216,7 +216,6 @@ BEGIN
     if (select target_location_id from load_legs where number_in_sequence = leg_number_param and load_id = load_id_param) = (select target_location_id from loads where load_id = load_id_param) then
     
 		-- write target time to loads table
-        -- select timestamp_param;
         update loads set target_time_actual = timestamp_param where load_id = load_id_param;
 	    -- calculate total duration
         update loads set duration_actual = timediff(timestamp_param,(select start_time from load_legs where load_id = load_id_param and number_in_sequence = 1)) where load_id = load_id_param;
