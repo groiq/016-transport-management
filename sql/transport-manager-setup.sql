@@ -315,6 +315,18 @@ insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) val
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('W-56785G',50.0,50.0,50.0);
 insert into trucks (license_plate,fixed_cost_per_hour,cost_per_km,avg_speed) values ('VL-3454G',50.0,50.0,50.0);
 
+-- python code for creating dummy distance entries
+/*
+#!/usr/bin/env python3
+
+count = 9
+
+for i in range(count):
+    for j in range(i+1,count):
+        print("insert into distances (start_id,target_id,distance) values ({},{},100);".format(i+1,j+1))
+*/
+
+
 insert into distances (start_id,target_id,distance) values (1,2,100);
 insert into distances (start_id,target_id,distance) values (1,3,100);
 insert into distances (start_id,target_id,distance) values (1,4,100);
