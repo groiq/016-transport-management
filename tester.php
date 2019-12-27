@@ -29,6 +29,7 @@
         echo ('$dbName: ' . $dbName);
         echo ('$dbHostname ' . $dbHostname);
         echo ('$dbPwd: ' . $dbPwd);
+        echo ('mysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
 
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $db_pwd);
 
