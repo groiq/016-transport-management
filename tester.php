@@ -23,8 +23,6 @@
         $dbName = getenv('db_name');
         $dbPwd = getenv('db_pwd');
         $dbHostname = getenv('db_hostname');
-
-
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
 
         // echo('<pre>');
