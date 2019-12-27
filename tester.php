@@ -37,13 +37,13 @@
 
         <?php
 
-            echo("$dummyString: ");
+            echo('$dummyString: ');
             var_dump($dummyString);
-            echo("$testVar: ");
+            echo('$testVar: ');
             var_dump($testVar);
-            echo("$dummyAppSetting: ");
+            echo('$dummyAppSetting: ');
             var_dump($dummyAppSetting);
-            echo("$pdo: ");
+            echo('$pdo: ');
             var_dump($pdo);
 
             print_r($locations);
