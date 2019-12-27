@@ -64,14 +64,6 @@
  
                     <h2>Neuer Transport</h2>
 
-                    <div>
-                        <?php
-                            echo('attempt 05: ');
-                            $dummyString = getenv('MYSQLCONNSTR_dummy-string');
-                            echo($dummyString);
-                        ?>
-                    </div>
-
                     <div class="">
 
                         <form action="./load.php" method="post">
