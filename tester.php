@@ -12,6 +12,7 @@
     <?php
 
         $dummyString = getenv('MYSQLCONNSTR_dummy-string');
+        $testVar = getenv('APPINSIGHTS_PROFILERFEATURE_VERSION');
 
     ?>
 
@@ -29,6 +30,7 @@
         <?php
 
             var_dump($dummyString);
+            var_dump($testVar);
 
         ?>
 
