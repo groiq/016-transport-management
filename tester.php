@@ -9,13 +9,13 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 16</h1>
+    <h1>Test Code for TMS - Attempt 17</h1>
 
     <?php
 
-        $dummyString = getenv('MYSQLCONNSTR_dummy-string');
-        $testVar = getenv('APPINSIGHTS_PROFILERFEATURE_VERSION');
-        $dummyAppSetting = getenv('dummy-application-setting');
+        // $dummyString = getenv('MYSQLCONNSTR_dummy-string');
+        // $testVar = getenv('APPINSIGHTS_PROFILERFEATURE_VERSION');
+        // $dummyAppSetting = getenv('dummy-application-setting');
 
         // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
@@ -24,14 +24,14 @@
         $dbPwd = getenv('db_pwd');
         $dbHostname = getenv('db_hostname');
 
-        echo('<pre>');
+        // echo('<pre>');
         // echo ('$sqlUsername: ');
         // var_dump($sqlUsername);
         // echo ('$dbName: ' . $dbName);
         // echo ('$dbHostname ' . $dbHostname);
-        echo ('$dbPwd: ' . $dbPwd);
+        // echo ('$dbPwd: ' . $dbPwd);
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
-        echo('</pre>');
+        // echo('</pre>');
 
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
 
@@ -49,14 +49,14 @@
 
         <?php
 
-            echo('$dummyString: ');
-            var_dump($dummyString);
-            echo('$testVar: ');
-            var_dump($testVar);
-            echo('$dummyAppSetting: ');
-            var_dump($dummyAppSetting);
-            echo('$pdo: ');
-            var_dump($pdo);
+            // echo('$dummyString: ');
+            // var_dump($dummyString);
+            // echo('$testVar: ');
+            // var_dump($testVar);
+            // echo('$dummyAppSetting: ');
+            // var_dump($dummyAppSetting);
+            // echo('$pdo: ');
+            // var_dump($pdo);
 
             print_r($locations);
 
