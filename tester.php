@@ -17,6 +17,10 @@
 
         $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
+        // $sqlUsername = getenv('MYSQLCONNSTR_username');
+
+        // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
+
 
         
         $locationQuerySql = "select location_id, name from locations;";
@@ -26,23 +30,20 @@
 
     ?>
 
-    <h1>Test Code for TMS</h1>
+    <h1>Test Code for TMS - Attempt 08</h1>
 
-    <div>
-        <?php
-        echo ('attempt 07: ');
-        echo ($dummyString);
-
-        ?>
-    </div>
 
     <pre>
 
         <?php
 
+            echo("$dummyString: ");
             var_dump($dummyString);
+            echo("$testVar: ");
             var_dump($testVar);
+            echo("$dummyAppSetting: ");
             var_dump($dummyAppSetting);
+            echo("$pdo: ");
             var_dump($pdo);
 
             print_r($locations);
