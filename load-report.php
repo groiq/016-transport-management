@@ -23,9 +23,16 @@
 
                 <?php
 
-                // connect to database 
+                 // connect to local database (for development)
                 // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
-                $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+
+                // connect to azure database
+                $sqlUsername = getenv('db_username');
+                $dbName = getenv('db_name');
+                $dbPwd = getenv('db_pwd');
+                $dbHostname = getenv('db_hostname');
+                $pdo = new PDO('mysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName, $sqlUsername, $dbPwd);
+
 
                 // read data
                 $reportQuerySql = 'select * from load_reports where load_id = ' 
