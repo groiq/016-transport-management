@@ -17,11 +17,11 @@
 
         $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
+
         
-        
-        // $locationQuerySql = "select location_id, name from locations;";
-        // $locationQuery = $pdo->query($locationQuerySql);
-        // $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $locationQuerySql = "select location_id, name from locations;";
+        $locationQuery = $pdo->query($locationQuerySql);
+        $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
 
 
     ?>
@@ -32,6 +32,7 @@
         <?php
         echo ('attempt 07: ');
         echo ($dummyString);
+
         ?>
     </div>
 
@@ -43,6 +44,8 @@
             var_dump($testVar);
             var_dump($dummyAppSetting);
             var_dump($pdo);
+
+            print_r($locations);
 
         ?>
 
