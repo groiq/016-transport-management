@@ -15,11 +15,11 @@
         $testVar = getenv('APPINSIGHTS_PROFILERFEATURE_VERSION');
         $dummyAppSetting = getenv('dummy-application-setting');
 
-        $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
+        // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
-        // $sqlUsername = getenv('MYSQLCONNSTR_username');
+        $sqlUsername = getenv('MYSQLCONNSTR_username');
 
-        // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
+        $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
 
 
         
@@ -30,7 +30,7 @@
 
     ?>
 
-    <h1>Test Code for TMS - Attempt 08</h1>
+    <h1>Test Code for TMS - Attempt 09</h1>
 
 
     <pre>
