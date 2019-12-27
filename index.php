@@ -66,7 +66,7 @@
 
                     <div>
                         <?php
-                            echo("this paragraph will host an environment varialble.");
+                            echo(Environment.GetEnvironmentVariable("dummy-string"));
                         ?>
                     </div>
 
