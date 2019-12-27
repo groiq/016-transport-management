@@ -64,6 +64,12 @@
  
                     <h2>Neuer Transport</h2>
 
+                    <div>
+                        <?php
+                            echo("this paragraph will host an environment varialble.");
+                        ?>
+                    </div>
+
                     <div class="">
 
                         <form action="./load.php" method="post">
