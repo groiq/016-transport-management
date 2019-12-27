@@ -66,9 +66,9 @@
 
                     <div>
                         <?php
-                            echo('attempt 04: ');
-                            echo(getenv('MYSQLCONNSTR_dummy-string'));
-                            // echo(Environment.GetEnvironmentVariable("MYSQLCONNSTR_dummy-string"));
+                            echo('attempt 05: ');
+                            $dummyString = getenv('MYSQLCONNSTR_dummy-string');
+                            echo($dummyString);
                         ?>
                     </div>
 
