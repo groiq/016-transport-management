@@ -9,6 +9,8 @@
 
 <body>
 
+    <h1>Test Code for TMS - Attempt 10</h1>
+
     <?php
 
         $dummyString = getenv('MYSQLCONNSTR_dummy-string');
@@ -31,8 +33,6 @@
 
 
     ?>
-
-    <h1>Test Code for TMS - Attempt 10</h1>
 
 
     <pre>
