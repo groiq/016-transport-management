@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 12</h1>
+    <h1>Test Code for TMS - Attempt 13</h1>
 
     <?php
 
@@ -20,11 +20,15 @@
         // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
         $sqlUsername = getenv('db_username');
-        echo('$sqlUsername: ');
-        var_dump($sqlUsername);
         $dbName = getenv('db_name');
         $dbPwd = getenv('db_pwd');
         $dbHostname = getenv('db_hostname');
+
+        echo ('$sqlUsername: ');
+        var_dump($sqlUsername);
+        echo ('$dbName: ' . $dbName);
+        echo ('$dbHostname ' . $dbHostname);
+        echo ('$dbPwd: ' . $dbPwd);
 
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $db_pwd);
 
