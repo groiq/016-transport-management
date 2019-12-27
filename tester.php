@@ -25,12 +25,12 @@
         $dbHostname = getenv('db_hostname');
 
         echo('<pre>');
-        echo ('$sqlUsername: ');
-        var_dump($sqlUsername);
-        echo ('$dbName: ' . $dbName);
-        echo ('$dbHostname ' . $dbHostname);
+        // echo ('$sqlUsername: ');
+        // var_dump($sqlUsername);
+        // echo ('$dbName: ' . $dbName);
+        // echo ('$dbHostname ' . $dbHostname);
         echo ('$dbPwd: ' . $dbPwd);
-        echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
+        // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
         echo('</pre>');
 
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
