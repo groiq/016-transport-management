@@ -9,15 +9,30 @@
 
 <body>
 
+    <?php
+
+        $dummyString = getenv('MYSQLCONNSTR_dummy-string');
+
+    ?>
+
     <h1>Test Code for TMS</h1>
 
     <div>
         <?php
-        echo ('attempt 05: ');
-        $dummyString = getenv('MYSQLCONNSTR_dummy-string');
+        echo ('attempt 06: ');
         echo ($dummyString);
         ?>
     </div>
+
+    <pre>
+
+        <?php
+
+            var_dump($dummyString);
+
+        ?>
+
+    </pre>
 
 
 </body>
