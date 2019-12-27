@@ -17,7 +17,7 @@
 
         // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
-        $sqlUsername = getenv('MYSQLCONNSTR_username');
+        $sqlUsername = getenv('db_username');
         echo('$sqlUsername: ');
         var_dump($sqlUsername);
 
@@ -32,7 +32,7 @@
 
     ?>
 
-    <h1>Test Code for TMS - Attempt 09</h1>
+    <h1>Test Code for TMS - Attempt 10</h1>
 
 
     <pre>
