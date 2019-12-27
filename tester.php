@@ -18,6 +18,8 @@
         // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
         $sqlUsername = getenv('MYSQLCONNSTR_username');
+        echo('$sqlUsername: ');
+        var_dump($sqlUsername);
 
         $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
 
