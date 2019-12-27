@@ -13,6 +13,7 @@
 
         $dummyString = getenv('MYSQLCONNSTR_dummy-string');
         $testVar = getenv('APPINSIGHTS_PROFILERFEATURE_VERSION');
+        $dummyAppSetting = getenv('dummy-application-setting');
 
     ?>
 
@@ -20,7 +21,7 @@
 
     <div>
         <?php
-        echo ('attempt 06: ');
+        echo ('attempt 07: ');
         echo ($dummyString);
         ?>
     </div>
@@ -31,6 +32,7 @@
 
             var_dump($dummyString);
             var_dump($testVar);
+            var_dump($dummyAppSetting);
 
         ?>
 
