@@ -24,6 +24,9 @@
         $dbPwd = getenv('db_pwd');
         $dbHostname = getenv('db_hostname');
 
+
+        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
+
         // echo('<pre>');
         // echo ('$sqlUsername: ');
         // var_dump($sqlUsername);
@@ -32,9 +35,6 @@
         // echo ('$dbPwd: ' . $dbPwd);
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
         // echo('</pre>');
-
-        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
-
 
         
         $locationQuerySql = "select location_id, name from locations;";
