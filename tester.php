@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 15</h1>
+    <h1>Test Code for TMS - Attempt 16</h1>
 
     <?php
 
@@ -33,7 +33,7 @@
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
         echo('</pre>');
 
-        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
+        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
 
 
         
