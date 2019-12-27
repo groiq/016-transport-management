@@ -24,7 +24,7 @@
         var_dump($sqlUsername);
         $dbName = getenv('db_name');
 
-        $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname='.$dbname, $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
+        $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, 'nRfO4v7t6AOl5OORuXJm');
 
 
         
