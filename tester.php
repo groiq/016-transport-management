@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 18</h1>
+    <h1>Test Code for TMS - Attempt 19</h1>
 
     <?php
 
@@ -19,19 +19,19 @@
 
         // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
-        $sqlUsername = getenv('db_username');
-        $dbName = getenv('db_name');
-        $dbPwd = getenv('db_pwd');
         $dbHostname = getenv('db_hostname');
-        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
+        $dbName = getenv('db_name');
+        $sqlUsername = getenv('db_username');
+        $dbUserName = getenv('db_username');
+        $dbPwd = getenv('db_pwd');
+        // $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
 
         echo('<pre>');
         var_dump($dummyString);
-        // echo ('$sqlUsername: ');
-        // var_dump($sqlUsername);
-        // echo ('$dbName: ' . $dbName);
-        // echo ('$dbHostname ' . $dbHostname);
-        // echo ('$dbPwd: ' . $dbPwd);
+        echo ('$dbHostname ' . $dbHostname);
+        echo ('$dbName: ' . $dbName);
+        echo('$dbUserName: ' . $dbUserName);
+        echo ('$dbPwd: ' . $dbPwd);
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
         echo('</pre>');
 
