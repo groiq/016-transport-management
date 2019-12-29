@@ -33,7 +33,11 @@
                 }
 
                 // connect to local database (for development)
-                // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
+                // $config = parse_ini_file('../tms_config.ini');
+                // $dbName = $config['dbname'];
+                // $dbUserName = $config['username'];
+                // $dbPwd = $config['pwd'];
+                // $pdo = new PDO('mysql:host=localhost:3306;dbname='.$dbName, $dbUserName, $dbPwd);
 
                 // connect to azure database
                 $dbHostname = getenv('MYSQLCONNSTR_hostname');
