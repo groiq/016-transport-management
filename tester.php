@@ -20,10 +20,10 @@
         // $pdo = new PDO('mysql:host=tms-database.mariadb.database.azure.com:3306;dbname=transport_management', 'tmsadmin@tms-database', 'nRfO4v7t6AOl5OORuXJm');
 
         $dbHostname = getenv('MYSQLCONNSTR_hostname');
-        $dbName = getenv('db_name');
-        $sqlUsername = getenv('db_username');
-        $dbUserName = getenv('db_username');
-        $dbPwd = getenv('db_pwd');
+        $dbName = getenv('MYSQLCONNSTR_db-name');
+        // $sqlUsername = getenv('db_username');
+        $dbUserName = getenv('MYSQLCONNSTR_username');
+        $dbPwd = getenv('MYSQLCONNSTR_pwd');
         // $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
 
         echo('<pre>');
