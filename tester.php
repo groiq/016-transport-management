@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 21</h1>
+    <h1>Test Code for TMS - Attempt 22</h1>
 
     <?php
 
@@ -24,8 +24,7 @@
         // $sqlUsername = getenv('db_username');
         $dbUserName = getenv('MYSQLCONNSTR_username');
         $dbPwd = getenv('MYSQLCONNSTR_pwd');
-        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $dbUsername, $dbPwd);
-
+        
         echo('<pre>');
         var_dump($dummyString);
         echo ('$dbHostname ' . $dbHostname . '<br />');
@@ -34,7 +33,8 @@
         echo ('$dbPwd: ' . $dbPwd . '<br />');
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
         echo('</pre>');
-
+        
+        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $dbUserName, $dbPwd);
         
         // $locationQuerySql = "select location_id, name from locations;";
         // $locationQuery = $pdo->query($locationQuerySql);
