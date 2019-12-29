@@ -27,12 +27,11 @@
                 // $pdo = new PDO('mysql:host=localhost:3306;dbname=transport_management', 'transport', 'transport_mgmt');
 
                 // connect to azure database
-                $sqlUsername = getenv('db_username');
-                $dbName = getenv('db_name');
-                $dbPwd = getenv('db_pwd');
-                $dbHostname = getenv('db_hostname');
-                $pdo = new PDO('mysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName, $sqlUsername, $dbPwd);
-
+                $dbHostname = getenv('MYSQLCONNSTR_hostname');
+                $dbName = getenv('MYSQLCONNSTR_db-name');
+                $dbUserName = getenv('MYSQLCONNSTR_username');
+                $dbPwd = getenv('MYSQLCONNSTR_pwd');
+                $pdo = new PDO('mysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName, $dbUserName, $dbPwd);
 
                 // read data
                 $reportQuerySql = 'select * from load_reports where load_id = ' 
