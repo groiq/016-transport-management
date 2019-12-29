@@ -36,9 +36,9 @@
         
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $dbUserName, $dbPwd);
         
-        // $locationQuerySql = "select location_id, name from locations;";
-        // $locationQuery = $pdo->query($locationQuerySql);
-        // $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $locationQuerySql = "select location_id, name from locations;";
+        $locationQuery = $pdo->query($locationQuerySql);
+        $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
 
 
     ?>
