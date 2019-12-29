@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 20</h1>
+    <h1>Test Code for TMS - Attempt 21</h1>
 
     <?php
 
@@ -24,7 +24,7 @@
         // $sqlUsername = getenv('db_username');
         $dbUserName = getenv('MYSQLCONNSTR_username');
         $dbPwd = getenv('MYSQLCONNSTR_pwd');
-        // $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
+        $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $dbUsername, $dbPwd);
 
         echo('<pre>');
         var_dump($dummyString);
@@ -50,7 +50,7 @@
 
             // echo('$dummyString: ');
             var_dump($dummyString);
-            // echo('$pdo: ');
+            echo('$pdo: ');
             var_dump($pdo);
 
             // print_r($locations);
