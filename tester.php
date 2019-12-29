@@ -13,7 +13,7 @@
 
     <?php
 
-        // $dummyString = getenv('MYSQLCONNSTR_dummy-string');
+        $dummyString = getenv('MYSQLCONNSTR_MYSQLCONNSTR_dummy-string');
         // $testVar = getenv('APPINSIGHTS_PROFILERFEATURE_VERSION');
         // $dummyAppSetting = getenv('dummy-application-setting');
 
@@ -25,14 +25,15 @@
         $dbHostname = getenv('db_hostname');
         $pdo = new PDO('mysql:host='.$dbHostname.'.mariadb.database.azure.com:3306;dbname='.$dbName, $sqlUsername, $dbPwd);
 
-        // echo('<pre>');
+        echo('<pre>');
+        var_dump($dummyString);
         // echo ('$sqlUsername: ');
         // var_dump($sqlUsername);
         // echo ('$dbName: ' . $dbName);
         // echo ('$dbHostname ' . $dbHostname);
         // echo ('$dbPwd: ' . $dbPwd);
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
-        // echo('</pre>');
+        echo('</pre>');
 
         
         $locationQuerySql = "select location_id, name from locations;";
