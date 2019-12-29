@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Test Code for TMS - Attempt 22</h1>
+    <h1>Test Code for TMS - Attempt 23</h1>
 
     <?php
 
@@ -53,7 +53,7 @@
             echo('$pdo: ');
             var_dump($pdo);
 
-            // print_r($locations);
+            print_r($locations);
 
         ?>
 
