@@ -28,17 +28,17 @@
 
         echo('<pre>');
         var_dump($dummyString);
-        echo ('$dbHostname ' . $dbHostname);
-        echo ('$dbName: ' . $dbName);
-        echo('$dbUserName: ' . $dbUserName);
-        echo ('$dbPwd: ' . $dbPwd);
+        echo ('$dbHostname ' . $dbHostname . '<br />');
+        echo ('$dbName: ' . $dbName . '<br />');
+        echo('$dbUserName: ' . $dbUserName . '<br />');
+        echo ('$dbPwd: ' . $dbPwd . '<br />');
         // echo ('\nmysql:host=' . $dbHostname . '.mariadb.database.azure.com:3306;dbname=' . $dbName);
         echo('</pre>');
 
         
-        $locationQuerySql = "select location_id, name from locations;";
-        $locationQuery = $pdo->query($locationQuerySql);
-        $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
+        // $locationQuerySql = "select location_id, name from locations;";
+        // $locationQuery = $pdo->query($locationQuerySql);
+        // $locations = $locationQuery->fetchAll(\PDO::FETCH_ASSOC);
 
 
     ?>
@@ -49,15 +49,13 @@
         <?php
 
             // echo('$dummyString: ');
-            // var_dump($dummyString);
-            // echo('$testVar: ');
-            // var_dump($testVar);
+            var_dump($dummyString);
             // echo('$dummyAppSetting: ');
-            // var_dump($dummyAppSetting);
+            var_dump($dummyAppSetting);
             // echo('$pdo: ');
-            // var_dump($pdo);
+            var_dump($pdo);
 
-            print_r($locations);
+            // print_r($locations);
 
         ?>
 
